@@ -1,5 +1,7 @@
 package com.hunjeong.kr.workbookproject.model;
 
+import android.util.Log;
+
 import java.util.UUID;
 
 import io.realm.RealmObject;
@@ -14,20 +16,21 @@ public class Dictionary extends RealmObject {
 
     private String dictionaryId;
     private String title;
-    private String explaination;
+    private String explain;
 
     public Dictionary() {
         this.dictionaryId = UUID.randomUUID().toString();
     }
 
-    public Dictionary(String title, String explaination) {
-        this.title = title;
-        this.explaination = explaination;
+    public Dictionary(String title, String explain) {
         this.dictionaryId = UUID.randomUUID().toString();
+        this.title = title;
+        this.explain = explain;
+        Log.d(DICTIONARY, dictionaryId);
     }
 
     public String getDictionaryId() {
-        return dictionaryId;
+        return this.dictionaryId;
     }
 
     public String getTitle() {
@@ -38,11 +41,11 @@ public class Dictionary extends RealmObject {
         this.title = title;
     }
 
-    public String getExplaination() {
-        return explaination;
+    public String getExplain() {
+        return explain;
     }
 
-    public void setExplaination(String explaination) {
-        this.explaination = explaination;
+    public void setExplain(String explain) {
+        this.explain = explain;
     }
 }

@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         splash();
         actionBarInit();
         initRealm();
-        initSeed();
+        //initSeed();
         initValue();
         initDialog();
         initFloatingActionButton();
@@ -119,16 +119,14 @@ public class MainActivity extends AppCompatActivity {
     /**
      * @param item : the item that user want to delete from dictionary list
      */
-    public void deleteItem(Dictionary item) {
+    public void deleteItem(final Dictionary item) {
         final String id = item.getDictionaryId();
-        realm.executeTransactionAsync(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                realm.where(Dictionary.class).equalTo(Dictionary.DICTIONARY, id)
-                        .findAll()
-                        .deleteAllFromRealm();
-            }
-        });
+        realm.beginTransaction();
+        realm.where(Dictionary.class).equalTo("dictionaryId", id)
+                .findAll()
+                .deleteAllFromRealm();
+        realm.commitTransaction();
+        cardAdapter.notifyDataSetChanged();
     }
 
     /**

@@ -41,7 +41,8 @@ public class CardAdapter extends RealmRecyclerViewAdapter<Dictionary, CardAdapte
     public void onBindViewHolder(ViewHolder holder, int position) {
         Dictionary dictionary = getData().get(position);
         holder.title.setText(dictionary.getTitle());
-        holder.explanation.setText(dictionary.getExplaination());
+        holder.explanation.setText(dictionary.getExplain());
+        holder.dictionary = dictionary;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, PopupMenu.OnMenuItemClickListener{
