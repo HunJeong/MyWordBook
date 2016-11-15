@@ -23,7 +23,7 @@
 
     <include layout="@layout/content_main" />
 
-    <com.hunjeong.kr.workbookproject.ui.Fab
+    <com.hunjeong.kr.workbookproject.ui.MaterialSheetFab.Fab
         android:id="@+id/main_fab"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
@@ -36,7 +36,7 @@
 
     <!-- Overlay that dims the screen -->
     <com.gordonwong.materialsheetfab.DimOverlayFrameLayout
-        android:id="@+id/overlay"
+        android:id="@+id/main_overlay"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
@@ -49,7 +49,7 @@
 
         <!-- Sheet that contains your items -->
         <android.support.v7.widget.CardView
-            android:id="@+id/fab_sheet"
+            android:id="@+id/main_fab_sheet"
             android:layout_width="250dp"
             android:layout_height="wrap_content">
 
@@ -60,17 +60,17 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/fab_sheet_item_csv"
+                    android:id="@+id/main_fab_sheet_item_csv"
                     style="@style/TextAppearance.MaterialSheetFab.Sheet.Item"
                     android:text="csv파일에서 가져오기" />
 
                 <TextView
-                    android:id="@+id/fab_sheet_item_excel"
+                    android:id="@+id/main_fab_sheet_item_excel"
                     style="@style/TextAppearance.MaterialSheetFab.Sheet.Item"
                     android:text="excel파일에서 가져오기" />
 
                 <TextView
-                    android:id="@+id/fab_sheet_item_do"
+                    android:id="@+id/main_fab_sheet_item_do"
                     style="@style/TextAppearance.MaterialSheetFab.Sheet.Item"
                     android:text="직접 입력하기" />
 

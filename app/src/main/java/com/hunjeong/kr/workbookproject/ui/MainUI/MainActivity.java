@@ -14,7 +14,7 @@ import android.widget.Toast;
 import com.gordonwong.materialsheetfab.MaterialSheetFab;
 import com.hunjeong.kr.workbookproject.R;
 import com.hunjeong.kr.workbookproject.model.Dictionary;
-import com.hunjeong.kr.workbookproject.ui.Fab;
+import com.hunjeong.kr.workbookproject.ui.MaterialSheetFab.Fab;
 import com.hunjeong.kr.workbookproject.ui.splash.SplashActivity;
 
 import io.realm.Realm;
@@ -90,16 +90,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
         */
-        View sheetView = findViewById(R.id.fab_sheet);
-        View overlay = findViewById(R.id.overlay);
+        View sheetView = findViewById(R.id.main_fab_sheet);
+        View overlay = findViewById(R.id.main_overlay);
         int sheetColor = getResources().getColor(R.color.white);
         int fabColor = getResources().getColor(R.color.CustomAccent);
 
         materialSheetFab = new MaterialSheetFab<>(fab, sheetView, overlay,
                 sheetColor, fabColor);
-        findViewById(R.id.fab_sheet_item_csv).setOnClickListener(this);
-        findViewById(R.id.fab_sheet_item_excel).setOnClickListener(this);
-        findViewById(R.id.fab_sheet_item_do).setOnClickListener(this);
+        findViewById(R.id.main_fab_sheet_item_csv).setOnClickListener(this);
+        findViewById(R.id.main_fab_sheet_item_excel).setOnClickListener(this);
+        findViewById(R.id.main_fab_sheet_item_do).setOnClickListener(this);
     }
 
 
@@ -190,13 +190,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int id = view.getId();
 
         switch (id) {
-            case R.id.fab_sheet_item_csv:
+            case R.id.main_fab_sheet_item_csv:
                 Toast.makeText(getApplicationContext(), "csv", Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.fab_sheet_item_excel:
+            case R.id.main_fab_sheet_item_excel:
                 Toast.makeText(getApplicationContext(), "excel", Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.fab_sheet_item_do:
+            case R.id.main_fab_sheet_item_do:
                 Toast.makeText(getApplicationContext(), "do", Toast.LENGTH_SHORT).show();
                 break;
         }

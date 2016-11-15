@@ -14,12 +14,14 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.gordonwong.materialsheetfab.MaterialSheetFab;
 import com.hunjeong.kr.workbookproject.R;
 import com.hunjeong.kr.workbookproject.model.Word;
+import com.hunjeong.kr.workbookproject.ui.MaterialSheetFab.Fab;
 
 import io.realm.Realm;
 
-public class WordListActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener{
+public class WordListActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener, View.OnClickListener{
 
     private static final String TAG = "WordListActivity";
 
@@ -30,6 +32,7 @@ public class WordListActivity extends AppCompatActivity implements AdapterView.O
     private String dictionaryName;
     private Intent intent;
     private WordListAdapter wordListAdapter;
+    private MaterialSheetFab materialSheetFab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,15 +55,18 @@ public class WordListActivity extends AppCompatActivity implements AdapterView.O
     }
 
     private void initFloatingActionButton() {
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.list_fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        Fab fab = (Fab) findViewById(R.id.list_fab);
 
+        View sheetView = findViewById(R.id.list_fab_sheet);
+        View overlay = findViewById(R.id.list_overlay);
+        int sheetColor = getResources().getColor(R.color.white);
+        int fabColor = getResources().getColor(R.color.CustomAccent);
+
+        materialSheetFab = new MaterialSheetFab<>(fab, sheetView, overlay,
+                sheetColor, fabColor);
+        findViewById(R.id.list_fab_sheet_item_csv).setOnClickListener(this);
+        findViewById(R.id.list_fab_sheet_item_excel).setOnClickListener(this);
+        findViewById(R.id.list_fab_sheet_item_do).setOnClickListener(this);
     }
 
     private void initValue() {
@@ -89,6 +95,15 @@ public class WordListActivity extends AppCompatActivity implements AdapterView.O
     }
 
     @Override
+    public void onBackPressed() {
+        if (materialSheetFab.isSheetVisible()) {
+            materialSheetFab.hideSheet();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
     }
@@ -97,5 +112,10 @@ public class WordListActivity extends AppCompatActivity implements AdapterView.O
     public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
 
         return true;
+    }
+
+    @Override
+    public void onClick(View view) {
+
     }
 }
