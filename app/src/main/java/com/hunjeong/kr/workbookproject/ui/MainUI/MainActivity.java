@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.gordonwong.materialsheetfab.MaterialSheetFab;
 import com.hunjeong.kr.workbookproject.R;
 import com.hunjeong.kr.workbookproject.model.Dictionary;
+import com.hunjeong.kr.workbookproject.model.Word;
 import com.hunjeong.kr.workbookproject.ui.MaterialSheetFab.Fab;
 import com.hunjeong.kr.workbookproject.ui.splash.SplashActivity;
 
@@ -146,6 +147,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         realm.commitTransaction();
     }
 
+    private void addSeedWord() {
+        realm.beginTransaction();
+        realm.copyToRealm(new Word("0000-0000-0000-0000","Hi", "안녕"));
+        realm.commitTransaction();
+    }
+
     /**
      * Popup Splash Activity
      */
@@ -167,12 +174,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            initSeed();
-            return true;
+        switch (id) {
+            case R.id.action_settings:
+                initSeed();
+                break;
+            case R.id.add_word:
+                addSeedWord();
+                break;
         }
-
         return super.onOptionsItemSelected(item);
     }
 

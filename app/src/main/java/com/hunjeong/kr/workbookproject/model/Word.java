@@ -1,5 +1,7 @@
 package com.hunjeong.kr.workbookproject.model;
 
+import java.util.Date;
+
 import io.realm.RealmObject;
 
 /**
@@ -11,10 +13,17 @@ public class Word extends RealmObject {
     private String dictionaryId;
     private String word;
     private String mean;
+    private Date createAt = new Date();
     private int numOfMistake;
 
     public Word() {
         this.numOfMistake = 0;
+    }
+
+    public Word(String dictionaryId, String word, String mean) {
+        this.dictionaryId = dictionaryId;
+        this.word = word;
+        this.mean = mean;
     }
 
     public Word(String word, String mean) {
@@ -57,4 +66,9 @@ public class Word extends RealmObject {
         else
             this.numOfMistake = 0;
     }
+
+    public Date getCreateAt() {
+        return createAt;
+    }
+
 }

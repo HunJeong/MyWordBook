@@ -45,6 +45,7 @@ public class WordListAdapter extends RealmBaseAdapter<Word> {
     private class ViewHolder {
         TextView word;
         TextView mean;
+        TextView mistake;
     }
 
     public WordListAdapter(@NonNull Context context, @Nullable OrderedRealmCollection<Word> data) {
@@ -59,6 +60,7 @@ public class WordListAdapter extends RealmBaseAdapter<Word> {
             viewHolder = new ViewHolder();
             viewHolder.word = (TextView)view.findViewById(R.id.row_word);
             viewHolder.mean = (TextView)view.findViewById(R.id.row_mean);
+            viewHolder.mistake = (TextView)view.findViewById(R.id.row_mistake);
             view.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder)view.getTag();
@@ -69,6 +71,7 @@ public class WordListAdapter extends RealmBaseAdapter<Word> {
         if (word != null) {
             viewHolder.word.setText(word.getWord());
             viewHolder.mean.setText(word.getMean());
+            viewHolder.mistake.setText("틀린 횟수 : " + word.getNumOfMistake());
             return view;
         }
         return null;

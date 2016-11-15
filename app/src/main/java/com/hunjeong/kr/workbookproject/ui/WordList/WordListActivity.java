@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.gordonwong.materialsheetfab.MaterialSheetFab;
 import com.hunjeong.kr.workbookproject.R;
@@ -71,8 +72,8 @@ public class WordListActivity extends AppCompatActivity implements AdapterView.O
 
     private void initValue() {
         realm = Realm.getDefaultInstance();
-        wordListAdapter = new WordListAdapter(getApplicationContext(), realm.where(Word.class).equalTo("dictionaryId", dictionaryId).findAll());
-
+        //wordListAdapter = new WordListAdapter(getApplicationContext(), realm.where(Word.class).equalTo("dictionaryId", dictionaryId).findAll());
+        wordListAdapter = new WordListAdapter(getApplicationContext(), realm.where(Word.class).findAll()); //Test
         listView = (ListView)findViewById(R.id.word_list);
         listView.setAdapter(wordListAdapter);
         listView.setEmptyView(findViewById(R.id.empty_view));
@@ -105,12 +106,12 @@ public class WordListActivity extends AppCompatActivity implements AdapterView.O
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
+        Toast.makeText(getApplicationContext(), "click", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-
+        Toast.makeText(getApplicationContext(), "long click", Toast.LENGTH_SHORT).show();
         return true;
     }
 
