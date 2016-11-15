@@ -13,6 +13,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hunjeong.kr.workbookproject.R;
 import com.hunjeong.kr.workbookproject.model.Dictionary;
@@ -79,6 +80,7 @@ public class CardAdapter extends RealmRecyclerViewAdapter<Dictionary, CardAdapte
             this.title = (TextView)view.findViewById(R.id.card_title);
             this.explanation = (TextView)view.findViewById(R.id.card_explanation);
             this.menu = (ImageButton)view.findViewById(R.id.card_menu);
+            view.setOnClickListener(this);
             menu.setOnClickListener(this);
         }
 
@@ -87,6 +89,11 @@ public class CardAdapter extends RealmRecyclerViewAdapter<Dictionary, CardAdapte
             switch (view.getId()) {
                 case R.id.card_menu:
                     initPopupMenu(view);
+                    break;
+                default:
+                    /**
+                     * Implement Intent
+                     */
                     break;
             }
         }
@@ -114,7 +121,7 @@ public class CardAdapter extends RealmRecyclerViewAdapter<Dictionary, CardAdapte
                     activity.deleteItem(dictionary);
                     break;
             }
-            return false;
+            return true;
         }
     }
 
