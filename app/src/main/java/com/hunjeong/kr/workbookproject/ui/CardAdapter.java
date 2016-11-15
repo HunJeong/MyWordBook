@@ -4,10 +4,13 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -16,12 +19,15 @@ import com.hunjeong.kr.workbookproject.model.Dictionary;
 
 import io.realm.OrderedRealmCollection;
 import io.realm.RealmRecyclerViewAdapter;
+import io.realm.Sort;
 
 /**
  * Created by JeongHun on 2016. 11. 11..
  */
 
 public class CardAdapter extends RealmRecyclerViewAdapter<Dictionary, CardAdapter.ViewHolder> {
+
+    private static final String TAG = "CardAdapter";
 
     private MainActivity activity;
 
@@ -39,10 +45,11 @@ public class CardAdapter extends RealmRecyclerViewAdapter<Dictionary, CardAdapte
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Dictionary dictionary = getData().get(position);
+        Dictionary dictionary = getData().sort("createAt", Sort.DESCENDING).get(position);
         holder.title.setText(dictionary.getTitle());
         holder.explanation.setText(dictionary.getExplain());
         holder.dictionary = dictionary;
+        Log.d(TAG, dictionary.getTitle() + " : " + position + " : " + dictionary.getCreateAt());
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, PopupMenu.OnMenuItemClickListener{
@@ -82,13 +89,18 @@ public class CardAdapter extends RealmRecyclerViewAdapter<Dictionary, CardAdapte
                     /**
                      * dictionary modify implement
                      */
+                    for (Dictionary dictionary: getData()) {
+                        Log.d(TAG, dictionary.getTitle());
+                    }
                     break;
                 case R.id.action_delete:
+                    Log.d(TAG, "delete " + dictionary.getTitle());
                     activity.deleteItem(dictionary);
                     break;
             }
             return false;
         }
     }
+
 
 }

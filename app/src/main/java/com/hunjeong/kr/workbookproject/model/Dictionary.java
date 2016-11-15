@@ -2,6 +2,7 @@ package com.hunjeong.kr.workbookproject.model;
 
 import android.util.Log;
 
+import java.util.Date;
 import java.util.UUID;
 
 import io.realm.RealmObject;
@@ -17,15 +18,18 @@ public class Dictionary extends RealmObject {
     private String dictionaryId;
     private String title;
     private String explain;
+    private Date createAt;
 
     public Dictionary() {
         this.dictionaryId = UUID.randomUUID().toString();
+        this. createAt = new Date();
     }
 
     public Dictionary(String title, String explain) {
         this.dictionaryId = UUID.randomUUID().toString();
         this.title = title;
         this.explain = explain;
+        this. createAt = new Date();
         Log.d(DICTIONARY, dictionaryId);
     }
 
@@ -47,5 +51,9 @@ public class Dictionary extends RealmObject {
 
     public void setExplain(String explain) {
         this.explain = explain;
+    }
+
+    public Date getCreateAt() {
+        return createAt;
     }
 }

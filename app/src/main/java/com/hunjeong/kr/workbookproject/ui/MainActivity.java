@@ -109,12 +109,14 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), listItem[i], Toast.LENGTH_SHORT).show();
                         break;
                     case 2:
+                        initSeed();
                         Toast.makeText(getApplicationContext(), listItem[i], Toast.LENGTH_SHORT).show();
                         break;
                 }
             }
         });
     }
+
 
     /**
      * @param item : the item that user want to delete from dictionary list
@@ -126,7 +128,6 @@ public class MainActivity extends AppCompatActivity {
                 .findAll()
                 .deleteAllFromRealm();
         realm.commitTransaction();
-        cardAdapter.notifyDataSetChanged();
     }
 
     /**
@@ -137,6 +138,9 @@ public class MainActivity extends AppCompatActivity {
         realm.copyToRealm(new Dictionary("한국어", "한국어 단어장"));
         realm.copyToRealm(new Dictionary("영어", "영어 단어장"));
         realm.copyToRealm(new Dictionary("프랑스어", "프랑스어 단어장"));
+        realm.copyToRealm(new Dictionary("중국어", "프랑스어 단어장"));
+        realm.copyToRealm(new Dictionary("일본어", "프랑스어 단어장"));
+        realm.copyToRealm(new Dictionary("독일어", "프랑스어 단어장"));
         realm.commitTransaction();
     }
 
