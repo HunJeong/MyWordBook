@@ -6,4 +6,6 @@
     <color name="CustomColorPrimary">#FF9900</color>
     <color name="CustomPrimaryDark">#FF6600</color>
     <color name="CustomAccent">#FFFF00</color>
+    <color name="text_black_87">#de000000</color>
+    <color name="white">#ffffffff</color>
 </resources>

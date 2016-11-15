@@ -14,14 +14,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.gordonwong.materialsheetfab.MaterialSheetFab;
 import com.hunjeong.kr.workbookproject.R;
 import com.hunjeong.kr.workbookproject.model.Dictionary;
+import com.hunjeong.kr.workbookproject.ui.Fab;
 import com.hunjeong.kr.workbookproject.ui.splash.SplashActivity;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     private static final String TAG = "MainActivity";
 
@@ -30,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager layoutManager;
     private CardAdapter cardAdapter;
     private AlertDialog.Builder dialogBuilder;
-
+    private MaterialSheetFab materialSheetFab;
     private int seed = 0;
 
     @Override
@@ -42,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
         initRealm();
         //initSeed();
         initValue();
-        initDialog();
         initFloatingActionButton();
     }
 
@@ -84,40 +85,25 @@ public class MainActivity extends AppCompatActivity {
      * Initialize FloatingActionButton
      */
     private void initFloatingActionButton() {
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.main_fab);
+        Fab fab = (Fab) findViewById(R.id.main_fab);
+        /*
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dialogBuilder.show();
             }
         });
-    }
+        */
+        View sheetView = findViewById(R.id.fab_sheet);
+        View overlay = findViewById(R.id.overlay);
+        int sheetColor = getResources().getColor(R.color.white);
+        int fabColor = getResources().getColor(R.color.CustomAccent);
 
-    /**
-     * Make dialog that appear when user click the floating button
-     * case 0 is bringing dictionary from CSV file
-     * case 1 is bringing dictionary from xlsx file
-     * case 2 is that users make dictionary themselves
-     */
-    private void initDialog() {
-        final CharSequence[] listItem = {"csv파일에서 가져오기", "엑셀파일에서 가져오기", "직접 추가하기"};
-        dialogBuilder = new AlertDialog.Builder(this);
-        dialogBuilder.setItems(listItem, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                switch (i) {
-                    case 0:
-                        Toast.makeText(getApplicationContext(), listItem[i], Toast.LENGTH_SHORT).show();
-                        break;
-                    case 1:
-                        Toast.makeText(getApplicationContext(), listItem[i], Toast.LENGTH_SHORT).show();
-                        break;
-                    case 2:
-                        Toast.makeText(getApplicationContext(), listItem[i], Toast.LENGTH_SHORT).show();
-                        break;
-                }
-            }
-        });
+        materialSheetFab = new MaterialSheetFab<>(fab, sheetView, overlay,
+                sheetColor, fabColor);
+        findViewById(R.id.fab_sheet_item_csv).setOnClickListener(this);
+        findViewById(R.id.fab_sheet_item_excel).setOnClickListener(this);
+        findViewById(R.id.fab_sheet_item_do).setOnClickListener(this);
     }
 
 
@@ -192,5 +178,31 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (materialSheetFab.isSheetVisible()) {
+            materialSheetFab.hideSheet();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
+
+        switch (id) {
+            case R.id.fab_sheet_item_csv:
+                Toast.makeText(getApplicationContext(), "csv", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.fab_sheet_item_excel:
+                Toast.makeText(getApplicationContext(), "excel", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.fab_sheet_item_do:
+                Toast.makeText(getApplicationContext(), "do", Toast.LENGTH_SHORT).show();
+                break;
+        }
     }
 }
