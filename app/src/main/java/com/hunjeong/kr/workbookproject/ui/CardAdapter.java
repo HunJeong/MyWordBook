@@ -29,7 +29,23 @@ public class CardAdapter extends RealmRecyclerViewAdapter<Dictionary, CardAdapte
 
     private static final String TAG = "CardAdapter";
 
+    public enum SortBasis {
+        NAME("name"), CREATEAT("createAt");
+
+        private String basis;
+
+        SortBasis(String createAt) {
+            basis = createAt;
+        }
+
+        public String getBasis() {
+            return basis;
+        }
+    }
+
     private MainActivity activity;
+    private SortBasis sortBasis = SortBasis.CREATEAT;
+    private Sort sortSequence = Sort.ASCENDING;
 
     public CardAdapter(@NonNull MainActivity activity, @Nullable OrderedRealmCollection<Dictionary> data) {
         super(activity, data, true);
@@ -45,7 +61,7 @@ public class CardAdapter extends RealmRecyclerViewAdapter<Dictionary, CardAdapte
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Dictionary dictionary = getData().sort("createAt", Sort.DESCENDING).get(position);
+        Dictionary dictionary = getData().sort(sortBasis.getBasis(), sortSequence).get(position);
         holder.title.setText(dictionary.getTitle());
         holder.explanation.setText(dictionary.getExplain());
         holder.dictionary = dictionary;
@@ -102,5 +118,11 @@ public class CardAdapter extends RealmRecyclerViewAdapter<Dictionary, CardAdapte
         }
     }
 
+    public void setSortBasis(SortBasis sortBasis) {
+        this.sortBasis = sortBasis;
+    }
 
+    public void setSortSequence(Sort sortSequence) {
+        this.sortSequence = sortSequence;
+    }
 }

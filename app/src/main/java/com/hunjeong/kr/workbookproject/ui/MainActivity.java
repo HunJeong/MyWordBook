@@ -29,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
     private CardAdapter cardAdapter;
     private AlertDialog.Builder dialogBuilder;
 
+    private int seed = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
         RealmConfiguration config = new RealmConfiguration.Builder().build();
         Realm.setDefaultConfiguration(config);
         realm = Realm.getInstance(config);
+
     }
 
     /**
@@ -109,7 +112,6 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), listItem[i], Toast.LENGTH_SHORT).show();
                         break;
                     case 2:
-                        initSeed();
                         Toast.makeText(getApplicationContext(), listItem[i], Toast.LENGTH_SHORT).show();
                         break;
                 }
@@ -135,12 +137,29 @@ public class MainActivity extends AppCompatActivity {
      */
     private void initSeed() {
         realm.beginTransaction();
-        realm.copyToRealm(new Dictionary("한국어", "한국어 단어장"));
-        realm.copyToRealm(new Dictionary("영어", "영어 단어장"));
-        realm.copyToRealm(new Dictionary("프랑스어", "프랑스어 단어장"));
-        realm.copyToRealm(new Dictionary("중국어", "프랑스어 단어장"));
-        realm.copyToRealm(new Dictionary("일본어", "프랑스어 단어장"));
-        realm.copyToRealm(new Dictionary("독일어", "프랑스어 단어장"));
+        switch (seed) {
+            case 0:
+                realm.copyToRealm(new Dictionary("한국어", "한국어 단어장"));
+                break;
+            case 1:
+                realm.copyToRealm(new Dictionary("영어", "영어 단어장"));
+                break;
+            case 2:
+                realm.copyToRealm(new Dictionary("프랑스어", "프랑스어 단어장"));
+                break;
+            case 3:
+                realm.copyToRealm(new Dictionary("중국어", "프랑스어 단어장"));
+                break;
+            case 4:
+                realm.copyToRealm(new Dictionary("일본어", "프랑스어 단어장"));
+                break;
+            case 5:
+                realm.copyToRealm(new Dictionary("독일어", "프랑스어 단어장"));
+                break;
+            default:
+                break;
+        }
+        seed = (seed + 1)%6;
         realm.commitTransaction();
     }
 
@@ -167,6 +186,7 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            initSeed();
             return true;
         }
 
