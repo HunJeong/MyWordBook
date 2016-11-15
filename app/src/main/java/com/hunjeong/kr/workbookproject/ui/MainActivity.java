@@ -23,6 +23,8 @@ import io.realm.RealmConfiguration;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = "MainActivity";
+
     private Realm realm;
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;

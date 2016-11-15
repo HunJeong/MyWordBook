@@ -31,7 +31,7 @@ public class CardAdapter extends RealmRecyclerViewAdapter<Dictionary, CardAdapte
     private static final String TAG = "CardAdapter";
 
     public enum SortBasis {
-        NAME("name"), CREATEAT("createAt");
+        NAME("name"), CREATE_AT("createAt");
 
         private String basis;
 
@@ -45,7 +45,7 @@ public class CardAdapter extends RealmRecyclerViewAdapter<Dictionary, CardAdapte
     }
 
     private MainActivity activity;
-    private SortBasis sortBasis = SortBasis.CREATEAT;
+    private SortBasis sortBasis = SortBasis.CREATE_AT;
     private Sort sortSequence = Sort.ASCENDING;
 
     public CardAdapter(@NonNull MainActivity activity, @Nullable OrderedRealmCollection<Dictionary> data) {
