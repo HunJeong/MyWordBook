@@ -14,11 +14,17 @@ public class Word extends RealmObject {
     private int numOfMistake;
 
     public Word() {
+        this.numOfMistake = 0;
     }
 
     public Word(String word, String mean) {
         this.word = word;
         this.mean = mean;
+        this.numOfMistake = 0;
+    }
+
+    public void setDictionaryId(String dictionaryId) {
+        this.dictionaryId = dictionaryId;
     }
 
     public String getDictionaryId() {

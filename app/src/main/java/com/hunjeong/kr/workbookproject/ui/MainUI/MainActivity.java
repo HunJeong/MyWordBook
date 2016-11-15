@@ -44,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
         initValue();
         initDialog();
         initFloatingActionButton();
-
     }
 
     /**
