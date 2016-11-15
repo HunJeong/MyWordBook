@@ -1,10 +1,7 @@
 package com.hunjeong.kr.workbookproject.ui.MainUI;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -31,7 +28,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private CardAdapter cardAdapter;
-    private AlertDialog.Builder dialogBuilder;
     private MaterialSheetFab materialSheetFab;
     private int seed = 0;
 
@@ -42,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         splash();
         actionBarInit();
         initRealm();
-        //initSeed();
+
         initValue();
         initFloatingActionButton();
     }
