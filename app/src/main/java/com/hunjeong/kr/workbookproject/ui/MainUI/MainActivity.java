@@ -1,4 +1,4 @@
-package com.hunjeong.kr.workbookproject.ui;
+package com.hunjeong.kr.workbookproject.ui.MainUI;
 
 import android.content.DialogInterface;
 import android.content.Intent;

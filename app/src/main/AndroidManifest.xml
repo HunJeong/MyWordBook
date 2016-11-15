@@ -9,7 +9,7 @@
         android:supportsRtl="true"
         android:theme="@style/CustomAppTheme">
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".ui.MainUI.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -18,7 +18,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.splash.SplashActivity"></activity>
+        <activity android:name=".ui.splash.SplashActivity" />
+        <activity
+            android:name=".WordListActivity"
+            android:label="@string/title_activity_word_list"
+            android:theme="@style/CustomAppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
