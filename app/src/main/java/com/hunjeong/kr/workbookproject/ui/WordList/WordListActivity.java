@@ -1,14 +1,24 @@
-package com.hunjeong.kr.workbookproject;
+package com.hunjeong.kr.workbookproject.ui.WordList;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 
+import com.hunjeong.kr.workbookproject.R;
+
 public class WordListActivity extends AppCompatActivity {
+
+    private static final String TAG = "WordListActivity";
+
+    private String dictionaryId;
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,13 +26,14 @@ public class WordListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_word_list);
         initActionBar();
         initFloatingActionButton();
+        initValue();
     }
 
     private void initActionBar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
     private void initFloatingActionButton() {
@@ -37,4 +48,23 @@ public class WordListActivity extends AppCompatActivity {
 
     }
 
+    private void initValue() {
+        intent = getIntent();
+        dictionaryId = intent.getStringExtra("dictionaryId");
+        Log.d(TAG, dictionaryId);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+        switch (id) {
+            case android.R.id.home:
+                finish();
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 }

@@ -20,7 +20,7 @@
         </activity>
         <activity android:name=".ui.splash.SplashActivity" />
         <activity
-            android:name=".WordListActivity"
+            android:name=".ui.WordList.WordListActivity"
             android:label="@string/title_activity_word_list"
             android:theme="@style/CustomAppTheme.NoActionBar"></activity>
     </application>

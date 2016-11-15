@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.hunjeong.kr.workbookproject.R;
 import com.hunjeong.kr.workbookproject.model.Dictionary;
+import com.hunjeong.kr.workbookproject.ui.WordList.WordListActivity;
 
 import io.realm.OrderedRealmCollection;
 import io.realm.RealmRecyclerViewAdapter;
@@ -89,7 +90,9 @@ public class CardAdapter extends RealmRecyclerViewAdapter<Dictionary, CardAdapte
                     initPopupMenu(view);
                     break;
                 default:
-                    Intent intent = new Intent(this, WordListActivity.class);
+                    Intent intent = new Intent(activity, WordListActivity.class);
+                    intent.putExtra("dictionaryId", dictionary.getDictionaryId());
+                    activity.startActivity(intent);
                     break;
             }
         }
