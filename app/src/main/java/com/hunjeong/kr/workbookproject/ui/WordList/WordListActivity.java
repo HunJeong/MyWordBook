@@ -18,6 +18,7 @@ public class WordListActivity extends AppCompatActivity {
     private static final String TAG = "WordListActivity";
 
     private String dictionaryId;
+    private String dictionaryName;
     private Intent intent;
 
     @Override
@@ -34,10 +35,14 @@ public class WordListActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+        intent = getIntent();
+        dictionaryId = intent.getStringExtra("dictionaryId");
+        dictionaryName = intent.getStringExtra("dictionaryName");
+        actionBar.setTitle(dictionaryName);
     }
 
     private void initFloatingActionButton() {
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.list_fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -49,9 +54,7 @@ public class WordListActivity extends AppCompatActivity {
     }
 
     private void initValue() {
-        intent = getIntent();
-        dictionaryId = intent.getStringExtra("dictionaryId");
-        Log.d(TAG, dictionaryId);
+
     }
 
     @Override

@@ -92,6 +92,7 @@ public class CardAdapter extends RealmRecyclerViewAdapter<Dictionary, CardAdapte
                 default:
                     Intent intent = new Intent(activity, WordListActivity.class);
                     intent.putExtra("dictionaryId", dictionary.getDictionaryId());
+                    intent.putExtra("dictionaryName", dictionary.getTitle());
                     activity.startActivity(intent);
                     break;
             }
