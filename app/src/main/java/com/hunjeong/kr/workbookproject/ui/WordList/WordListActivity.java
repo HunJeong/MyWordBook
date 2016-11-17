@@ -1,6 +1,8 @@
 package com.hunjeong.kr.workbookproject.ui.WordList;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -15,6 +17,10 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.baoyz.swipemenulistview.SwipeMenu;
+import com.baoyz.swipemenulistview.SwipeMenuCreator;
+import com.baoyz.swipemenulistview.SwipeMenuItem;
+import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.gordonwong.materialsheetfab.MaterialSheetFab;
 import com.hunjeong.kr.workbookproject.R;
 import com.hunjeong.kr.workbookproject.model.Word;
@@ -26,7 +32,7 @@ public class WordListActivity extends AppCompatActivity implements AdapterView.O
 
     private static final String TAG = "WordListActivity";
 
-    private ListView listView;
+    private SwipeMenuListView listView;
 
     private Realm realm;
     private String dictionaryId;
@@ -74,11 +80,48 @@ public class WordListActivity extends AppCompatActivity implements AdapterView.O
         realm = Realm.getDefaultInstance();
         //wordListAdapter = new WordListAdapter(getApplicationContext(), realm.where(Word.class).equalTo("dictionaryId", dictionaryId).findAll());
         wordListAdapter = new WordListAdapter(getApplicationContext(), realm.where(Word.class).findAll()); //Test
-        listView = (ListView)findViewById(R.id.word_list);
+        listView = (SwipeMenuListView) findViewById(R.id.word_list);
         listView.setAdapter(wordListAdapter);
         listView.setEmptyView(findViewById(R.id.empty_view));
         listView.setOnItemClickListener(this);
         listView.setOnItemLongClickListener(this);
+        initListViewMenu();
+    }
+
+    private void initListViewMenu() {
+        SwipeMenuCreator menuCreator = new SwipeMenuCreator() {
+            @Override
+            public void create(SwipeMenu menu) {
+                // create "delete" item
+                SwipeMenuItem deleteItem = new SwipeMenuItem(
+                        getApplicationContext());
+                // set item background
+                deleteItem.setBackground(new ColorDrawable(Color.rgb(0xF9,
+                        0x3F, 0x25)));
+                // set item width
+                deleteItem.setWidth(270);
+                // set a icon
+                deleteItem.setIcon(android.R.drawable.ic_delete);
+                // add to menu
+                menu.addMenuItem(deleteItem);
+            }
+        };
+        listView.setMenuCreator(menuCreator);
+        listView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
+                switch (index) {
+                    case 0:
+                        realm.beginTransaction();
+                        Word word = (Word)listView.getItemAtPosition(position);
+                        realm.where(Word.class).equalTo("dictionaryId", word.getDictionaryId()).equalTo("word", word.getWord()).equalTo("mean", word.getMean()).findFirst().deleteFromRealm();
+                        realm.commitTransaction();
+                        wordListAdapter.notifyDataSetChanged();
+                        break;
+                }
+                return true;
+            }
+        });
     }
 
     @Override

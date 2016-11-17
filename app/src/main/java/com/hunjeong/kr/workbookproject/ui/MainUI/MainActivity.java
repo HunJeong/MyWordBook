@@ -20,6 +20,7 @@ import com.hunjeong.kr.workbookproject.ui.splash.SplashActivity;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -76,6 +77,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(cardAdapter);
         recyclerView.setHasFixedSize(true);
+        recyclerView.setItemAnimator(new SlideInLeftAnimator());
     }
 
     /**
@@ -83,14 +85,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     private void initFloatingActionButton() {
         Fab fab = (Fab) findViewById(R.id.main_fab);
-        /*
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialogBuilder.show();
-            }
-        });
-        */
         View sheetView = findViewById(R.id.main_fab_sheet);
         View overlay = findViewById(R.id.main_overlay);
         int sheetColor = getResources().getColor(R.color.white);

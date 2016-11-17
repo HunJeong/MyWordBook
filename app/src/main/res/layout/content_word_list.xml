@@ -9,8 +9,8 @@
     tools:context="com.hunjeong.kr.workbookproject.ui.WordList.WordListActivity"
     tools:showIn="@layout/activity_word_list">
 
-    <ListView
-        android:paddingTop="8dp"
+    <com.baoyz.swipemenulistview.SwipeMenuListView
+        android:layout_marginTop="8dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/word_list"/>
