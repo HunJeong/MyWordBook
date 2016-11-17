@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hunjeong.kr.workbookproject.R;
 import com.hunjeong.kr.workbookproject.model.Dictionary;
@@ -65,6 +66,7 @@ public class CardAdapter extends RealmRecyclerViewAdapter<Dictionary, CardAdapte
         holder.title.setText(dictionary.getTitle());
         holder.explanation.setText(dictionary.getExplain());
         holder.dictionary = dictionary;
+        holder.position = position;
         Log.d(TAG, dictionary.getTitle() + " : " + position + " : " + dictionary.getCreateAt());
     }
 
@@ -73,6 +75,7 @@ public class CardAdapter extends RealmRecyclerViewAdapter<Dictionary, CardAdapte
         TextView title;
         TextView explanation;
         ImageButton menu;
+        int position;
 
         public ViewHolder(View view) {
             super(view);
@@ -119,11 +122,15 @@ public class CardAdapter extends RealmRecyclerViewAdapter<Dictionary, CardAdapte
                 case R.id.action_delete:
                     Log.d(TAG, "delete " + dictionary.getTitle());
                     activity.deleteItem(dictionary);
+                    Toast.makeText(activity, "" + position, Toast.LENGTH_SHORT).show();
+                    notifyItemRemoved(position);
                     break;
             }
             return true;
         }
     }
+
+
 
     public void setSortBasis(SortBasis sortBasis) {
         this.sortBasis = sortBasis;
