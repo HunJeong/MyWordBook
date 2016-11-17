@@ -143,7 +143,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void addSeedWord() {
         realm.beginTransaction();
-        realm.copyToRealm(new Word("0000-0000-0000-0000","Hi", "안녕"));
+        for (int i = 0; i < 10; i++) {
+            realm.copyToRealm(new Word("0000-0000-0000-0000", "Hi" + i, "안녕" + i));
+        }
         realm.commitTransaction();
     }
 

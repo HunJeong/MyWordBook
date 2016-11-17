@@ -13,7 +13,7 @@ public class Word extends RealmObject {
     private String dictionaryId;
     private String word;
     private String mean;
-    private Date createAt = new Date();
+    private long createAt = new Date().getTime();
     private int numOfMistake;
 
     public Word() {
@@ -67,7 +67,7 @@ public class Word extends RealmObject {
             this.numOfMistake = 0;
     }
 
-    public Date getCreateAt() {
+    public long getCreateAt() {
         return createAt;
     }
 

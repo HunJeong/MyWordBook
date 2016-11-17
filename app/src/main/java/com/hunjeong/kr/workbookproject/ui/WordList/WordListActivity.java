@@ -1,20 +1,20 @@
 package com.hunjeong.kr.workbookproject.ui.WordList;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ListView;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.baoyz.swipemenulistview.SwipeMenu;
@@ -38,6 +38,7 @@ public class WordListActivity extends AppCompatActivity implements AdapterView.O
     private String dictionaryId;
     private String dictionaryName;
     private Intent intent;
+
     private WordListAdapter wordListAdapter;
     private MaterialSheetFab materialSheetFab;
 
@@ -79,6 +80,10 @@ public class WordListActivity extends AppCompatActivity implements AdapterView.O
     private void initValue() {
         realm = Realm.getDefaultInstance();
         //wordListAdapter = new WordListAdapter(getApplicationContext(), realm.where(Word.class).equalTo("dictionaryId", dictionaryId).findAll());
+        initListView();
+    }
+
+    private void initListView() {
         wordListAdapter = new WordListAdapter(getApplicationContext(), realm.where(Word.class).findAll()); //Test
         listView = (SwipeMenuListView) findViewById(R.id.word_list);
         listView.setAdapter(wordListAdapter);
@@ -153,9 +158,46 @@ public class WordListActivity extends AppCompatActivity implements AdapterView.O
     }
 
     @Override
-    public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-        Toast.makeText(getApplicationContext(), "long click", Toast.LENGTH_SHORT).show();
+    public boolean onItemLongClick(final AdapterView<?> adapterView, final View view, final int position, long id) {
+        Toast.makeText(getApplicationContext(), "" + position, Toast.LENGTH_SHORT).show();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("단어 수정");
+        LinearLayout linearLayout = new LinearLayout(getApplicationContext());
+        linearLayout.setOrientation(LinearLayout.VERTICAL);
+        final EditText wordEdit = new EditText(this);
+        wordEdit.setHint("word");
+        wordEdit.setText(((Word)adapterView.getItemAtPosition(position)).getWord());
+        final EditText meanEdit = new EditText(this);
+        meanEdit.setHint("mean");
+        meanEdit.setText(((Word)adapterView.getItemAtPosition(position)).getMean());
+        linearLayout.addView(wordEdit);
+        linearLayout.addView(meanEdit);
+        builder.setView(linearLayout);
+        builder.setPositiveButton("수정", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                editItem((Word)adapterView.getItemAtPosition(position), wordEdit.getText().toString(), meanEdit.getText().toString());
+            }
+        });
+        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+        builder.show();
         return true;
+    }
+
+    public void editItem(final Word editWord, final String modifiedWord, final String modifiedMean) {
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                Word word = realm.where(Word.class).equalTo("dictionaryId", editWord.getDictionaryId()).equalTo("word", editWord.getWord()).equalTo("mean", editWord.getMean()).findFirst();
+                word.setWord(modifiedWord);
+                word.setMean(modifiedMean);
+            }
+        });
     }
 
     @Override

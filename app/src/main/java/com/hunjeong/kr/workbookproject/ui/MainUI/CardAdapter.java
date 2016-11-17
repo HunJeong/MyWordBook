@@ -130,8 +130,6 @@ public class CardAdapter extends RealmRecyclerViewAdapter<Dictionary, CardAdapte
         }
     }
 
-
-
     public void setSortBasis(SortBasis sortBasis) {
         this.sortBasis = sortBasis;
     }

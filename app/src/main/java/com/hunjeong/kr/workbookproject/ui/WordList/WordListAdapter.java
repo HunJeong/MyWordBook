@@ -76,4 +76,5 @@ public class WordListAdapter extends RealmBaseAdapter<Word> {
         }
         return null;
     }
+
 }
