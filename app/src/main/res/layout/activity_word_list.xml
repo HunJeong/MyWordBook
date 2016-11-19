@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="com.hunjeong.kr.workbookproject.ui.WordList.WordListActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/CustomAppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/CustomAppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <include layout="@layout/content_word_list" />
+
+    <com.hunjeong.kr.workbookproject.ui.MaterialSheetFab.Fab
+        android:id="@+id/list_fab"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        app:srcCompat="@android:drawable/ic_media_play"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content" />
+
+    <!-- Overlay that dims the screen -->
+    <com.gordonwong.materialsheetfab.DimOverlayFrameLayout
+        android:id="@+id/list_overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <!-- Circular reveal container for the sheet -->
+    <io.codetail.widget.RevealLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="end|bottom"
+        android:orientation="vertical">
+
+        <!-- Sheet that contains your items -->
+        <android.support.v7.widget.CardView
+            android:id="@+id/list_fab_sheet"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content">
+
+            <!-- TODO: Put your sheet items here -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/list_fab_sheet_item_csv"
+                    style="@style/TextAppearance.MaterialSheetFab.Sheet.Item"
+                    android:text="csv파일에서 가져오기" />
+
+                <TextView
+                    android:id="@+id/list_fab_sheet_item_excel"
+                    style="@style/TextAppearance.MaterialSheetFab.Sheet.Item"
+                    android:text="excel파일에서 가져오기" />
+
+                <TextView
+                    android:id="@+id/list_fab_sheet_item_do"
+                    style="@style/TextAppearance.MaterialSheetFab.Sheet.Item"
+                    android:text="직접 입력하기" />
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+    </io.codetail.widget.RevealLinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>
