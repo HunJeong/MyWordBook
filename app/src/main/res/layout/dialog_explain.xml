@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="160dp"
+    android:padding="20dp"
+    android:orientation="vertical">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/dialog_word"
+        android:lines="1"
+        android:textColor="#ff000000"
+        android:hint="word"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:lines="3"
+        android:gravity="top"
+        android:textColor="#ff000000"
+        android:id="@+id/dialog_mean"
+        android:hint="mean"/>
+
+
+</LinearLayout>
