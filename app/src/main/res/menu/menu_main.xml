@@ -1,7 +1,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.hunjeong.kr.workbookproject.ui.MainActivity">
+    tools:context="com.hunjeong.kr.workbookproject.ui.MainUI.MainActivity">
+
+    <!-- 이건 나중에 삭제해야됨 -->
+    <item
+        android:id="@+id/add_word"
+        android:orderInCategory="100"
+        android:title="add word"
+        app:showAsAction="never" />
+
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"

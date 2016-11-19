@@ -19,12 +19,12 @@ public class Dictionary extends RealmObject {
     private String title;
     private String explain;
     private int numOfWords;
-    private Date createAt;
+    private long createAt;
 
     public Dictionary() {
         this.dictionaryId = UUID.randomUUID().toString();
         this.numOfWords = 0;
-        this. createAt = new Date();
+        this. createAt = new Date().getTime();
     }
 
     public Dictionary(String title, String explain) {
@@ -32,7 +32,7 @@ public class Dictionary extends RealmObject {
         this.title = title;
         this.explain = explain;
         this.numOfWords = 0;
-        this. createAt = new Date();
+        this. createAt = new Date().getTime();
         Log.d(DICTIONARY, dictionaryId);
     }
 
@@ -56,7 +56,7 @@ public class Dictionary extends RealmObject {
         this.explain = explain;
     }
 
-    public Date getCreateAt() {
+    public long getCreateAt() {
         return createAt;
     }
 
