@@ -1,9 +1,7 @@
 package com.hunjeong.kr.workbookproject.ui.WordList;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
@@ -11,20 +9,14 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.Toolbar;
-import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.baoyz.swipemenulistview.SwipeMenu;
@@ -35,7 +27,6 @@ import com.gordonwong.materialsheetfab.MaterialSheetFab;
 import com.hunjeong.kr.workbookproject.R;
 import com.hunjeong.kr.workbookproject.model.Word;
 import com.hunjeong.kr.workbookproject.ui.MaterialSheetFab.Fab;
-import com.hunjeong.kr.workbookproject.ui.WordAddActivity;
 
 import io.realm.Realm;
 import io.realm.Sort;

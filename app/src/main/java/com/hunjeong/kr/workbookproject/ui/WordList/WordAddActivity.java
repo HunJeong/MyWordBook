@@ -1,4 +1,4 @@
-package com.hunjeong.kr.workbookproject.ui;
+package com.hunjeong.kr.workbookproject.ui.WordList;
 
 import android.content.Intent;
 import android.os.Bundle;

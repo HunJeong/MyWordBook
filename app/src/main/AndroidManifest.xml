@@ -24,7 +24,7 @@
             android:label="@string/title_activity_word_list"
             android:theme="@style/CustomAppTheme.NoActionBar" />
         <activity
-            android:name=".ui.WordAddActivity"
+            android:name=".ui.WordList.WordAddActivity"
             android:label="@string/title_activity_word_add"
             android:theme="@style/CustomAppTheme.NoActionBar"></activity>
     </application>
