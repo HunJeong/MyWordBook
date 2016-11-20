@@ -155,12 +155,9 @@ public class WordListActivity extends AppCompatActivity implements AdapterView.O
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("단어 수정");
         LinearLayout linearLayout = new LinearLayout(getApplicationContext());
-        linearLayout.setOrientation(LinearLayout.VERTICAL);
         View v = LayoutInflater.from(getApplicationContext()).inflate(R.layout.dialog_explain, linearLayout, true);
         final EditText wordEdit = (EditText)v.findViewById(R.id.dialog_word);
-        wordEdit.getBackground().setColorFilter(0xff4081, PorterDuff.Mode.SRC_IN);
         final EditText meanEdit = (EditText)v.findViewById(R.id.dialog_mean);
-        meanEdit.getBackground().setColorFilter(0xff4081, PorterDuff.Mode.SRC_IN);
         wordEdit.setText(((Word)adapterView.getItemAtPosition(position)).getWord());
         meanEdit.setText(((Word)adapterView.getItemAtPosition(position)).getMean());
         builder.setView(linearLayout);
