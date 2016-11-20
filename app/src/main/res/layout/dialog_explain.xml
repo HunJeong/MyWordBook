@@ -17,7 +17,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:lines="3"
+        android:lines="1"
         android:inputType="textPersonName"
         android:gravity="top"
         android:textColor="#ff000000"

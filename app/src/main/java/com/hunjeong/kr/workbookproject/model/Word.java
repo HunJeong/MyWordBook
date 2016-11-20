@@ -25,6 +25,7 @@ public class Word extends RealmObject {
         this.dictionaryId = dictionaryId;
         this.word = word;
         this.mean = mean;
+        this.numOfMistake = 0;
         this.isImportant = false;
     }
 
