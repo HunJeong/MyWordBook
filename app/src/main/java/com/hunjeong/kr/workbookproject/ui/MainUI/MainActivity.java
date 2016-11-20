@@ -1,14 +1,19 @@
 package com.hunjeong.kr.workbookproject.ui.MainUI;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.gordonwong.materialsheetfab.MaterialSheetFab;
@@ -204,7 +209,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Toast.makeText(getApplicationContext(), "excel", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.main_fab_sheet_item_do:
-                Toast.makeText(getApplicationContext(), "do", Toast.LENGTH_SHORT).show();
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("단어장 생성");
+                LinearLayout linearLayout = new LinearLayout(this);
+                View v = LayoutInflater.from(getApplicationContext()).inflate(R.layout.dialog_explain, linearLayout, true);
+                final EditText wordEdit = (EditText)v.findViewById(R.id.dialog_word);
+                final EditText explanEdit = (EditText)v.findViewById(R.id.dialog_mean);
+                builder.setView(v);
+                builder.setPositiveButton("추가", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        if (wordEdit.getText().length() == 0) {
+                            Toast.makeText(getApplicationContext(), "단어장 이름을 입력해주세요.", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        realm.beginTransaction();
+                        realm.copyToRealm(new Dictionary(wordEdit.getText().toString(), explanEdit.getText().toString()));
+                        realm.commitTransaction();
+                    }
+                });
+                builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+                builder.show();
                 break;
         }
     }
