@@ -182,7 +182,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         switch (id) {
             case R.id.action_settings:
-                initSeed();
+
                 break;
         }
         return super.onOptionsItemSelected(item);

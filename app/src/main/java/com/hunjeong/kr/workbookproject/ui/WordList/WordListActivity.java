@@ -3,7 +3,6 @@ package com.hunjeong.kr.workbookproject.ui.WordList;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -72,7 +71,7 @@ public class WordListActivity extends AppCompatActivity implements AdapterView.O
         View sheetView = findViewById(R.id.list_fab_sheet);
         View overlay = findViewById(R.id.list_overlay);
         int sheetColor = getResources().getColor(R.color.white);
-        int fabColor = getResources().getColor(R.color.CustomAccent);
+        int fabColor = getResources().getColor(R.color.colorAccent);
 
         materialSheetFab = new MaterialSheetFab<>(fab, sheetView, overlay,
                 sheetColor, fabColor);
@@ -147,7 +146,7 @@ public class WordListActivity extends AppCompatActivity implements AdapterView.O
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        Toast.makeText(getApplicationContext(), ((Word)adapterView.getItemAtPosition(i)).getWord(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), ((Word)adapterView.getItemAtPosition(i)).getWord(), Toast.LENGTH_SHORT).show();
     }
 
     @Override

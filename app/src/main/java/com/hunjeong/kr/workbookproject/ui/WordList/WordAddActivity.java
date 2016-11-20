@@ -3,7 +3,6 @@ package com.hunjeong.kr.workbookproject.ui.WordList;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -16,7 +15,6 @@ import android.widget.Toast;
 
 import com.hunjeong.kr.workbookproject.R;
 import com.hunjeong.kr.workbookproject.model.Word;
-import com.hunjeong.kr.workbookproject.ui.WordList.WordListAdapter;
 
 import io.realm.Realm;
 import io.realm.Sort;
@@ -24,8 +22,6 @@ import io.realm.Sort;
 public class WordAddActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener{
 
     private String dictionaryId;
-    private boolean isAdd = false;
-    private Word modifiedWord;
 
     private Realm realm;
     private ListView listView;
