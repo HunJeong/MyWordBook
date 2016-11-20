@@ -27,8 +27,8 @@ public class WordListAdapter extends RealmBaseAdapter<Word> {
     private static final String TAG = "WordListAdapter";
 
     private Realm realm;
-    private SortBasis sortBasis = SortBasis.CREATE_AT;
-    private Sort sortSequence = Sort.ASCENDING;
+    private SortBasis sortBasis;
+    private Sort sortSequence;
 
     private OrderedRealmCollection<Word> data;
 
@@ -75,6 +75,10 @@ public class WordListAdapter extends RealmBaseAdapter<Word> {
         return data;
     }
 
+    public OrderedRealmCollection<Word> getSortedDatas() {
+        return getDatas().sort(sortBasis.getBasis(), sortSequence);
+    }
+
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         ViewHolder  viewHolder;
@@ -93,7 +97,7 @@ public class WordListAdapter extends RealmBaseAdapter<Word> {
         }
 
         if (word != null) {
-            Log.d(TAG, "" + i);
+            Log.d(TAG, "" + i + " : " + word.getWord());
             viewHolder.word.setText(word.getWord());
             viewHolder.mean.setText(word.getMean());
             viewHolder.mistake.setText("틀린 횟수 : " + word.getNumOfMistake());

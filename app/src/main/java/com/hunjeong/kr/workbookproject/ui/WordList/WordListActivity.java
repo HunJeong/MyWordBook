@@ -10,6 +10,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -123,7 +124,8 @@ public class WordListActivity extends AppCompatActivity implements AdapterView.O
                 switch (index) {
                     case 0:
                         realm.beginTransaction();
-                        Word word = (Word)listView.getItemAtPosition(position);
+                        Word word = wordListAdapter.getSortedDatas().get(position);
+                        Log.d(TAG, "" + position + " : " + word.getWord());
                         realm.where(Word.class).equalTo("dictionaryId", word.getDictionaryId()).equalTo("word", word.getWord()).equalTo("mean", word.getMean()).findFirst().deleteFromRealm();
                         realm.commitTransaction();
                         wordListAdapter.notifyDataSetChanged();
@@ -145,7 +147,7 @@ public class WordListActivity extends AppCompatActivity implements AdapterView.O
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
+        Toast.makeText(getApplicationContext(), ((Word)adapterView.getItemAtPosition(i)).getWord(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
