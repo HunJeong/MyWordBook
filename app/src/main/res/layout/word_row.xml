@@ -14,8 +14,11 @@
             android:layout_height="wrap_content"
             android:id="@+id/important_word"
             android:checked="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:layout_centerInParent="true"
             android:button="@drawable/star_button"
-            android:layout_centerInParent="true" />
+            />
 
     </RelativeLayout>
 

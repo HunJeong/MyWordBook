@@ -96,7 +96,9 @@ public class WordListActivity extends AppCompatActivity implements AdapterView.O
     }
 
     private void initListView() {
-        wordListAdapter = new WordListAdapter(getApplicationContext(), realm.where(Word.class).findAll()); //Test
+        wordListAdapter = new WordListAdapter(getApplicationContext(), realm.where(Word.class).equalTo("dictionaryId", dictionaryId).findAll()); //Test
+        wordListAdapter.setSortBasis(WordListAdapter.SortBasis.CREATE_AT);
+        wordListAdapter.setSortSequence(Sort.DESCENDING);
         listView = (SwipeMenuListView) findViewById(R.id.word_list);
         listView.setAdapter(wordListAdapter);
         listView.setEmptyView(findViewById(R.id.empty_view));

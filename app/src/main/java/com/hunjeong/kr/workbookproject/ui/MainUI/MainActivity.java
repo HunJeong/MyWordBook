@@ -179,9 +179,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.action_settings:
                 initSeed();
                 break;
-            case R.id.add_word:
-                addSeedWord();
-                break;
         }
         return super.onOptionsItemSelected(item);
     }
