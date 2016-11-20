@@ -126,7 +126,6 @@ public class WordListActivity extends AppCompatActivity implements AdapterView.O
                         Word word = (Word)listView.getItemAtPosition(position);
                         realm.where(Word.class).equalTo("dictionaryId", word.getDictionaryId()).equalTo("word", word.getWord()).equalTo("mean", word.getMean()).findFirst().deleteFromRealm();
                         realm.commitTransaction();
-                        wordListAdapter.getDatas().sort(WordListAdapter.SortBasis.CREATE_AT.getBasis(), Sort.ASCENDING);
                         wordListAdapter.notifyDataSetChanged();
                         break;
                 }
