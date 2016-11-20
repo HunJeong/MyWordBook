@@ -35,6 +35,7 @@ import com.gordonwong.materialsheetfab.MaterialSheetFab;
 import com.hunjeong.kr.workbookproject.R;
 import com.hunjeong.kr.workbookproject.model.Word;
 import com.hunjeong.kr.workbookproject.ui.MaterialSheetFab.Fab;
+import com.hunjeong.kr.workbookproject.ui.WordAddActivity;
 
 import io.realm.Realm;
 import io.realm.Sort;
@@ -223,7 +224,9 @@ public class WordListActivity extends AppCompatActivity implements AdapterView.O
                 finish();
                 break;
             case R.id.add_word:
-
+                Intent intent = new Intent(this, WordAddActivity.class);
+                intent.putExtra("dictionaryId", dictionaryId);
+                startActivity(intent);
                 break;
         }
 

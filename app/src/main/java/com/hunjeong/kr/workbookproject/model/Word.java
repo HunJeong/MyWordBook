@@ -15,6 +15,7 @@ public class Word extends RealmObject {
     private String mean;
     private long createAt = new Date().getTime();
     private int numOfMistake;
+    private boolean isImportant;
 
     public Word() {
         this.numOfMistake = 0;
@@ -24,12 +25,14 @@ public class Word extends RealmObject {
         this.dictionaryId = dictionaryId;
         this.word = word;
         this.mean = mean;
+        this.isImportant = false;
     }
 
     public Word(String word, String mean) {
         this.word = word;
         this.mean = mean;
         this.numOfMistake = 0;
+        this.isImportant = false;
     }
 
     public void setDictionaryId(String dictionaryId) {
@@ -65,6 +68,14 @@ public class Word extends RealmObject {
             this.numOfMistake = numOfMistake;
         else
             this.numOfMistake = 0;
+    }
+
+    public boolean isImportant() {
+        return isImportant;
+    }
+
+    public void setImportant(boolean important) {
+        isImportant = important;
     }
 
     public long getCreateAt() {

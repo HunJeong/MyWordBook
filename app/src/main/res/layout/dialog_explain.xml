@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/dialog_word"
         android:lines="1"
+        android:inputType="textPersonName"
         android:textColor="#ff000000"
         android:hint="word"/>
 
@@ -17,6 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:lines="3"
+        android:inputType="textPersonName"
         android:gravity="top"
         android:textColor="#ff000000"
         android:id="@+id/dialog_mean"
