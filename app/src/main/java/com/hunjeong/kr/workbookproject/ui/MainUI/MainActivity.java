@@ -112,6 +112,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         realm.where(Dictionary.class).equalTo("dictionaryId", id)
                 .findAll()
                 .deleteAllFromRealm();
+        realm.where(Word.class).equalTo("dictionaryId", id)
+                .findAll()
+                .deleteAllFromRealm();
         realm.commitTransaction();
     }
 
