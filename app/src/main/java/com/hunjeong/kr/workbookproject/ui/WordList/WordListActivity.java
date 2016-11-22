@@ -1,10 +1,12 @@
 package com.hunjeong.kr.workbookproject.ui.WordList;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -15,8 +17,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.baoyz.swipemenulistview.SwipeMenu;
@@ -26,7 +30,6 @@ import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.gordonwong.materialsheetfab.MaterialSheetFab;
 import com.hunjeong.kr.workbookproject.R;
 import com.hunjeong.kr.workbookproject.model.Word;
-import com.hunjeong.kr.workbookproject.ui.MaterialSheetFab.Fab;
 
 import io.realm.Realm;
 import io.realm.Sort;
@@ -66,18 +69,8 @@ public class WordListActivity extends AppCompatActivity implements AdapterView.O
     }
 
     private void initFloatingActionButton() {
-        Fab fab = (Fab) findViewById(R.id.list_fab);
-
-        View sheetView = findViewById(R.id.list_fab_sheet);
-        View overlay = findViewById(R.id.list_overlay);
-        int sheetColor = getResources().getColor(R.color.white);
-        int fabColor = getResources().getColor(R.color.colorAccent);
-
-        materialSheetFab = new MaterialSheetFab<>(fab, sheetView, overlay,
-                sheetColor, fabColor);
-        findViewById(R.id.list_fab_sheet_item_csv).setOnClickListener(this);
-        findViewById(R.id.list_fab_sheet_item_excel).setOnClickListener(this);
-        findViewById(R.id.list_fab_sheet_item_do).setOnClickListener(this);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.start_exam);
+        fab.setOnClickListener(this);
     }
 
     private void initValue() {
@@ -137,11 +130,7 @@ public class WordListActivity extends AppCompatActivity implements AdapterView.O
 
     @Override
     public void onBackPressed() {
-        if (materialSheetFab.isSheetVisible()) {
-            materialSheetFab.hideSheet();
-        } else {
-            super.onBackPressed();
-        }
+
     }
 
     @Override
@@ -194,7 +183,42 @@ public class WordListActivity extends AppCompatActivity implements AdapterView.O
 
     @Override
     public void onClick(View view) {
+        int id = view.getId();
+        switch (id) {
+            case R.id.start_exam:
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("시험 설정");
+                LinearLayout linearLayout = new LinearLayout(this);
+                View content = getLayoutInflater().inflate(R.layout.dialog_exam, linearLayout, true);
+                Spinner wordSpinner = (Spinner)content.findViewById(R.id.exam_word_slt);
+                Spinner sortSpinner = (Spinner)content.findViewById(R.id.exam_sort_slt);
+                Spinner typeSpinner = (Spinner)content.findViewById(R.id.exam_type_slt);
+                EditText numEdit = (EditText)content.findViewById(R.id.exam_num_edit);
 
+                String[] wordTyps = {"모든 단어", "체크 단어", "비체크 단어"};
+                String[] sorts = {"생성 순서", "이름 순서", "랜덤"};
+                String[] exams = {"넘기면서 외우기", "직접 쓰기", "발음 연습"};
+
+                wordSpinner.setAdapter(new CustomSpinnerAdapter(getApplicationContext(), wordTyps));
+                sortSpinner.setAdapter(new CustomSpinnerAdapter(getApplicationContext(), sorts));
+                typeSpinner.setAdapter(new CustomSpinnerAdapter(getApplicationContext(), exams));
+
+                builder.setPositiveButton("시작", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+                builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+                builder.setView(content);
+                builder.show();
+                break;
+        }
     }
 
     @Override

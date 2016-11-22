@@ -1,5 +1,7 @@
 package com.hunjeong.kr.workbookproject.ui.MainUI;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -240,5 +243,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 builder.show();
                 break;
         }
+        materialSheetFab.hideSheet();
     }
 }

@@ -12,6 +12,7 @@
         android:lines="1"
         android:inputType="textPersonName"
         android:textColor="#ff000000"
+        android:textColorHint="#a3a3a3"
         android:hint="word"/>
 
     <EditText
@@ -22,6 +23,7 @@
         android:inputType="textPersonName"
         android:textColor="#ff000000"
         android:id="@+id/dialog_mean"
+        android:textColorHint="#a3a3a3"
         android:hint="mean"/>
 
 
