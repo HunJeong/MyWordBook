@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -193,6 +194,9 @@ public class WordListActivity extends AppCompatActivity implements AdapterView.O
                 final Spinner sortSpinner = (Spinner)content.findViewById(R.id.exam_sort_slt);
                 final Spinner typeSpinner = (Spinner)content.findViewById(R.id.exam_type_slt);
                 final EditText numEdit = (EditText)content.findViewById(R.id.exam_num_edit);
+                final RadioButton meadRadio = (RadioButton)content.findViewById(R.id.meadRadio);
+                final RadioButton wordRadio = (RadioButton)content.findViewById(R.id.wordRadio);
+                meadRadio.setChecked(true);
 
                 String[] wordTyps = {"모든 단어", "체크 단어", "비체크 단어"};
                 String[] sorts = {"생성 순서", "이름 순서", "랜덤"};
@@ -207,6 +211,7 @@ public class WordListActivity extends AppCompatActivity implements AdapterView.O
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Intent exam = new Intent();
+                        exam.putExtra("mead", meadRadio.isChecked());
                         if (((String)typeSpinner.getSelectedItem()).equals("넘기면서 외우기")) {
                             try {
                                 exam.setClass(getApplicationContext(), SwipeExamActivity.class);

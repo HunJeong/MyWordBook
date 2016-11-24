@@ -19,6 +19,34 @@
         android:id="@+id/exam_word_slt" />
 
     <TextView
+        android:text="시험 종류"
+        android:layout_width="match_parent"
+        android:textSize="16sp"
+        android:layout_height="wrap_content" />
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="16dp"
+        android:weightSum="2">
+
+        <RadioButton
+            android:text="뜻"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/meadRadio"
+            android:layout_weight="1" />
+
+        <RadioButton
+            android:text="단어"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/wordRadio"
+            android:layout_weight="1" />
+    </RadioGroup>
+
+    <TextView
         android:text="정렬 기준"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
