@@ -4,6 +4,15 @@
     android:id="@+id/activity_swipe_exam"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clipChildren="false"
     tools:context="com.hunjeong.kr.workbookproject.ui.SwipeExam.SwipeExamActivity">
+
+    <link.fls.swipestack.SwipeStack
+        android:layout_width="320dp"
+        android:layout_height="460dp"
+        android:padding="32dp"
+        android:id="@+id/swipeStack"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

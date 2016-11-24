@@ -211,6 +211,7 @@ public class WordListActivity extends AppCompatActivity implements AdapterView.O
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Intent exam = new Intent();
+                        exam.putExtra("dictionaryId", dictionaryId);
                         exam.putExtra("mead", meadRadio.isChecked());
                         if (((String)typeSpinner.getSelectedItem()).equals("넘기면서 외우기")) {
                             try {
