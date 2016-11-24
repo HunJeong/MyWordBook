@@ -29,6 +29,7 @@ import com.baoyz.swipemenulistview.SwipeMenuItem;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.gordonwong.materialsheetfab.MaterialSheetFab;
 import com.hunjeong.kr.workbookproject.R;
+import com.hunjeong.kr.workbookproject.SwipeExamActivity;
 import com.hunjeong.kr.workbookproject.model.Word;
 
 import io.realm.Realm;
@@ -130,7 +131,7 @@ public class WordListActivity extends AppCompatActivity implements AdapterView.O
 
     @Override
     public void onBackPressed() {
-
+        super.onBackPressed();
     }
 
     @Override
@@ -190,15 +191,16 @@ public class WordListActivity extends AppCompatActivity implements AdapterView.O
                 builder.setTitle("시험 설정");
                 LinearLayout linearLayout = new LinearLayout(this);
                 View content = getLayoutInflater().inflate(R.layout.dialog_exam, linearLayout, true);
-                Spinner wordSpinner = (Spinner)content.findViewById(R.id.exam_word_slt);
-                Spinner sortSpinner = (Spinner)content.findViewById(R.id.exam_sort_slt);
-                Spinner typeSpinner = (Spinner)content.findViewById(R.id.exam_type_slt);
-                EditText numEdit = (EditText)content.findViewById(R.id.exam_num_edit);
+                final Spinner wordSpinner = (Spinner)content.findViewById(R.id.exam_word_slt);
+                final Spinner sortSpinner = (Spinner)content.findViewById(R.id.exam_sort_slt);
+                final Spinner typeSpinner = (Spinner)content.findViewById(R.id.exam_type_slt);
+                final EditText numEdit = (EditText)content.findViewById(R.id.exam_num_edit);
 
                 String[] wordTyps = {"모든 단어", "체크 단어", "비체크 단어"};
                 String[] sorts = {"생성 순서", "이름 순서", "랜덤"};
                 String[] exams = {"넘기면서 외우기", "직접 쓰기", "발음 연습"};
 
+                numEdit.setText("0");
                 wordSpinner.setAdapter(new CustomSpinnerAdapter(getApplicationContext(), wordTyps));
                 sortSpinner.setAdapter(new CustomSpinnerAdapter(getApplicationContext(), sorts));
                 typeSpinner.setAdapter(new CustomSpinnerAdapter(getApplicationContext(), exams));
@@ -207,6 +209,22 @@ public class WordListActivity extends AppCompatActivity implements AdapterView.O
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
+                        if (((String)typeSpinner.getSelectedItem()).equals("넘기면서 외우기")) {
+                            try {
+                                Intent exam = new Intent(getApplicationContext(), SwipeExamActivity.class);
+                                exam.putExtra("wordType", (String) wordSpinner.getSelectedItem());
+                                exam.putExtra("sort", (String) sortSpinner.getSelectedItem());
+                                exam.putExtra("mistake", Integer.valueOf(numEdit.getText().toString()));
+                                startActivity(exam);
+                            } catch (NumberFormatException e) {
+                                e.printStackTrace();
+                                Toast.makeText(getApplicationContext(), "숫자를 입력해주세요.", Toast.LENGTH_SHORT).show();
+                            }
+                        } else if (((String)typeSpinner.getSelectedItem()).equals("직접 쓰기")) {
+
+                        } else {
+
+                        }
                     }
                 });
                 builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
