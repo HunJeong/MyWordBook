@@ -208,10 +208,10 @@ public class WordListActivity extends AppCompatActivity implements AdapterView.O
                 builder.setPositiveButton("시작", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-
+                        Intent exam = new Intent();
                         if (((String)typeSpinner.getSelectedItem()).equals("넘기면서 외우기")) {
                             try {
-                                Intent exam = new Intent(getApplicationContext(), SwipeExamActivity.class);
+                                exam.setClass(getApplicationContext(), SwipeExamActivity.class);
                                 exam.putExtra("wordType", (String) wordSpinner.getSelectedItem());
                                 exam.putExtra("sort", (String) sortSpinner.getSelectedItem());
                                 exam.putExtra("mistake", Integer.valueOf(numEdit.getText().toString()));
