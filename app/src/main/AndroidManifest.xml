@@ -27,7 +27,7 @@
             android:name=".ui.WordList.WordAddActivity"
             android:label="@string/title_activity_word_add"
             android:theme="@style/CustomAppTheme.NoActionBar" />
-        <activity android:name=".SwipeExamActivity"></activity>
+        <activity android:name=".ui.SwipeExam.SwipeExamActivity"></activity>
     </application>
 
 </manifest>

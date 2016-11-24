@@ -1,6 +1,5 @@
 package com.hunjeong.kr.workbookproject.ui.WordList;
 
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -17,7 +16,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -29,7 +27,7 @@ import com.baoyz.swipemenulistview.SwipeMenuItem;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.gordonwong.materialsheetfab.MaterialSheetFab;
 import com.hunjeong.kr.workbookproject.R;
-import com.hunjeong.kr.workbookproject.SwipeExamActivity;
+import com.hunjeong.kr.workbookproject.ui.SwipeExam.SwipeExamActivity;
 import com.hunjeong.kr.workbookproject.model.Word;
 
 import io.realm.Realm;
