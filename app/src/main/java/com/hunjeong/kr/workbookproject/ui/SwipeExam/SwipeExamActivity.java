@@ -10,6 +10,7 @@ import android.view.MenuItem;
 
 import com.hunjeong.kr.workbookproject.R;
 import com.hunjeong.kr.workbookproject.model.Word;
+import com.hunjeong.kr.workbookproject.ui.WordList.WordListAdapter;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -17,6 +18,7 @@ import java.util.LinkedList;
 import io.realm.Realm;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
+import io.realm.Sort;
 import link.fls.swipestack.SwipeStack;
 
 public class SwipeExamActivity extends AppCompatActivity {
@@ -28,6 +30,7 @@ public class SwipeExamActivity extends AppCompatActivity {
     private String dictionaryId;
     private String wordType;
     private String sortType;
+    private String sortSequence;
     private int numOfMistake;
     private boolean meanExam;
 
@@ -56,14 +59,25 @@ public class SwipeExamActivity extends AppCompatActivity {
         } else if (wordType.equals("비체크 단어")){
              realmQuery = realmQuery.equalTo("isImportant", false);
         }
+
         RealmResults<Word> realmResult = realmQuery.findAll();
-        if (sortType.equals("생성 순사")) {
-            realmResult.sort("createAt");
+
+        if (sortType.equals("생성 순서")) {
+            if (sortSequence.equals("오름차순")) {
+                realmResult = realmResult.sort("createAt");
+            } else if (sortSequence.equals("내림차순")) {
+                realmResult = realmResult.sort("createAt", Sort.DESCENDING);
+            }
         } else if (sortType.equals("이름 순서")) {
-            realmResult.sort("word");
+            if (sortSequence.equals("오름차순")) {
+                realmResult = realmResult.sort("word");
+            } else if (sortSequence.equals("내림차순")) {
+                realmResult = realmResult.sort("word", Sort.DESCENDING);
+            }
         } else {
             //Random
         }
+
         linkedList.addAll(realmResult);
     }
 
@@ -79,7 +93,7 @@ public class SwipeExamActivity extends AppCompatActivity {
         sortType = intent.getStringExtra("sort");
         numOfMistake = intent.getIntExtra("mistake", 0);
         meanExam = intent.getBooleanExtra("mean", true);
-
+        sortSequence = intent.getStringExtra("sequence");
         linkedList = new LinkedList<>();
     }
 

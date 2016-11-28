@@ -68,8 +68,8 @@ public class WordAddActivity extends AppCompatActivity implements View.OnClickLi
 
     private void initValue() {
         realm = Realm.getDefaultInstance();
-        addMeanEdit = (EditText)findViewById(R.id.add_word_edit);
-        addWordEdit = (EditText)findViewById(R.id.add_mean_edit);
+        addMeanEdit = (EditText)findViewById(R.id.add_mean_edit);
+        addWordEdit = (EditText)findViewById(R.id.add_word_edit);
     }
 
     @Override

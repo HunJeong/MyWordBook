@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hunjeong.kr.workbookproject.R;
 import com.hunjeong.kr.workbookproject.model.Word;
@@ -55,7 +56,7 @@ public class WordListAdapter extends RealmBaseAdapter<Word> {
         this.sortSequence = sortSequence;
     }
 
-    private class ViewHolder {
+    public class ViewHolder {
         TextView word;
         TextView mean;
         TextView mistake;
@@ -66,9 +67,6 @@ public class WordListAdapter extends RealmBaseAdapter<Word> {
         super(context, data);
         realm = Realm.getDefaultInstance();
         this. data = data;
-        for (Word word : data) {
-            Log.d(TAG, word.toString());
-        }
     }
 
     public OrderedRealmCollection<Word> getDatas(){
@@ -80,7 +78,7 @@ public class WordListAdapter extends RealmBaseAdapter<Word> {
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
+    public View getView(final int i, View view, ViewGroup viewGroup) {
         ViewHolder  viewHolder;
         final Word word = adapterData.sort(sortBasis.getBasis(), sortSequence).get(i);
 
@@ -105,6 +103,7 @@ public class WordListAdapter extends RealmBaseAdapter<Word> {
             viewHolder.important.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    Toast.makeText(context, i + "", Toast.LENGTH_SHORT).show();
                     realm.beginTransaction();
                     word.setImportant(!word.isImportant());
                     realm.commitTransaction();

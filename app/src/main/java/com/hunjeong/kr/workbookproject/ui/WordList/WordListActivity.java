@@ -146,14 +146,15 @@ public class WordListActivity extends AppCompatActivity implements AdapterView.O
         View v = LayoutInflater.from(getApplicationContext()).inflate(R.layout.dialog_explain, linearLayout, true);
         final EditText wordEdit = (EditText)v.findViewById(R.id.dialog_word);
         final EditText meanEdit = (EditText)v.findViewById(R.id.dialog_mean);
-        wordEdit.setText(((Word)adapterView.getItemAtPosition(position)).getWord());
-        meanEdit.setText(((Word)adapterView.getItemAtPosition(position)).getMean());
+        final Word word = wordListAdapter.getSortedDatas().get(position);
+        wordEdit.setText(word.getWord());
+        meanEdit.setText(word.getMean());
         builder.setView(linearLayout);
         builder.setPositiveButton("수정", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 if (wordEdit.getText().length() != 0 && meanEdit.getText().length() != 0)
-                    editItem((Word)adapterView.getItemAtPosition(position), wordEdit.getText().toString(), meanEdit.getText().toString());
+                    editItem(word, wordEdit.getText().toString(), meanEdit.getText().toString());
                 else if (wordEdit.getText().length() == 0)
                     Toast.makeText(getApplicationContext(), "단어를 입력해주세요.", Toast.LENGTH_SHORT).show();
                 else
@@ -193,6 +194,7 @@ public class WordListActivity extends AppCompatActivity implements AdapterView.O
                 final Spinner wordSpinner = (Spinner)content.findViewById(R.id.exam_word_slt);
                 final Spinner sortSpinner = (Spinner)content.findViewById(R.id.exam_sort_slt);
                 final Spinner typeSpinner = (Spinner)content.findViewById(R.id.exam_type_slt);
+                final Spinner sortSequenceSpinner = (Spinner)content.findViewById(R.id.exam_sort_sequence);
                 final EditText numEdit = (EditText)content.findViewById(R.id.exam_num_edit);
                 final RadioButton meadRadio = (RadioButton)content.findViewById(R.id.meadRadio);
                 final RadioButton wordRadio = (RadioButton)content.findViewById(R.id.wordRadio);
@@ -201,11 +203,13 @@ public class WordListActivity extends AppCompatActivity implements AdapterView.O
                 String[] wordTyps = {"모든 단어", "체크 단어", "비체크 단어"};
                 String[] sorts = {"생성 순서", "이름 순서", "랜덤"};
                 String[] exams = {"넘기면서 외우기", "직접 쓰기", "발음 연습"};
+                String[] sort_sequence = {"오름차순", "내림차순"};
 
                 numEdit.setText("0");
                 wordSpinner.setAdapter(new CustomSpinnerAdapter(getApplicationContext(), wordTyps));
                 sortSpinner.setAdapter(new CustomSpinnerAdapter(getApplicationContext(), sorts));
                 typeSpinner.setAdapter(new CustomSpinnerAdapter(getApplicationContext(), exams));
+                sortSequenceSpinner.setAdapter(new CustomSpinnerAdapter(getApplicationContext(), sort_sequence));
 
                 builder.setPositiveButton("시작", new DialogInterface.OnClickListener() {
                     @Override
@@ -219,6 +223,7 @@ public class WordListActivity extends AppCompatActivity implements AdapterView.O
                                 exam.putExtra("wordType", (String) wordSpinner.getSelectedItem());
                                 exam.putExtra("sort", (String) sortSpinner.getSelectedItem());
                                 exam.putExtra("mistake", Integer.valueOf(numEdit.getText().toString()));
+                                exam.putExtra("sequence", (String) sortSequenceSpinner.getSelectedItem());
                                 startActivity(exam);
                             } catch (NumberFormatException e) {
                                 e.printStackTrace();

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_width="350dp"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp">
 
@@ -56,6 +56,16 @@
         android:layout_height="60dp"
         android:paddingBottom="16dp"
         android:id="@+id/exam_sort_slt" />
+
+    <TextView
+        android:text="정렬 순"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:paddingBottom="16dp"
+        android:id="@+id/exam_sort_sequence" />
 
     <TextView
         android:text="시험 유형"
