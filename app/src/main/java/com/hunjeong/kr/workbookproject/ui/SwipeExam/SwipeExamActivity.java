@@ -2,17 +2,18 @@
 package com.hunjeong.kr.workbookproject.ui.SwipeExam;
 
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
 import com.hunjeong.kr.workbookproject.R;
 import com.hunjeong.kr.workbookproject.model.Word;
-import com.hunjeong.kr.workbookproject.ui.WordList.WordListAdapter;
 
-import java.util.Iterator;
+import java.util.Collections;
 import java.util.LinkedList;
 
 import io.realm.Realm;
@@ -35,8 +36,10 @@ public class SwipeExamActivity extends AppCompatActivity {
     private boolean meanExam;
 
     private SwipeStack swipeStack;
-    private SwipeStackAdapter swipeStactAdapter;
+    private SwipeStackAdapter swipeStackAdapter;
+    private FloatingActionButton fab;
     private LinkedList<Word> linkedList;
+    private LinkedList<Word> mistakeList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,23 +65,40 @@ public class SwipeExamActivity extends AppCompatActivity {
 
         RealmResults<Word> realmResult = realmQuery.findAll();
 
-        if (sortType.equals("생성 순서")) {
-            if (sortSequence.equals("오름차순")) {
+        linkedList = initLinkedList(realmResult, sortType, sortSequence);
+        mistakeList = new LinkedList<>();
+        shuffleLinkedList(linkedList, sortType.equals("랜덤"));
+    }
+
+    private LinkedList<Word> initLinkedList(RealmResults<Word> realmResult, String sort, String sequence) {
+        if (sort.equals("생성 순서")) {
+            if (sequence.equals("오름차순")) {
                 realmResult = realmResult.sort("createAt");
-            } else if (sortSequence.equals("내림차순")) {
+            } else if (sequence.equals("내림차순")) {
                 realmResult = realmResult.sort("createAt", Sort.DESCENDING);
             }
-        } else if (sortType.equals("이름 순서")) {
-            if (sortSequence.equals("오름차순")) {
+        } else if (sort.equals("이름 순서")) {
+            if (sequence.equals("오름차순")) {
                 realmResult = realmResult.sort("word");
-            } else if (sortSequence.equals("내림차순")) {
+            } else if (sequence.equals("내림차순")) {
                 realmResult = realmResult.sort("word", Sort.DESCENDING);
             }
-        } else {
-            //Random
         }
+        return new LinkedList<>(realmResult);
+    }
 
-        linkedList.addAll(realmResult);
+    private void shuffleLinkedList(LinkedList<Word> linkedList, boolean isSort) {
+        if (isSort) {
+             Collections.shuffle(linkedList);
+        }
+    }
+
+    private void addMistake(LinkedList<Word> linkedList) {
+        realm.beginTransaction();
+        for (Word word : linkedList) {
+            word.setNumOfMistake(word.getNumOfMistake() + 1);
+        }
+        realm.commitTransaction();
     }
 
     private void initActionBar() {
@@ -94,13 +114,41 @@ public class SwipeExamActivity extends AppCompatActivity {
         numOfMistake = intent.getIntExtra("mistake", 0);
         meanExam = intent.getBooleanExtra("mean", true);
         sortSequence = intent.getStringExtra("sequence");
-        linkedList = new LinkedList<>();
     }
 
     private void initView() {
+        fab = (FloatingActionButton)findViewById(R.id.show_detail);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "Show", Toast.LENGTH_SHORT).show();
+            }
+        });
         swipeStack = (SwipeStack)findViewById(R.id.swipeStack);
-        swipeStactAdapter = new SwipeStackAdapter(getApplicationContext(), linkedList, meanExam);
-        swipeStack.setAdapter(swipeStactAdapter);
+        swipeStackAdapter = new SwipeStackAdapter(getApplicationContext(), linkedList, meanExam);
+        swipeStack.setAdapter(swipeStackAdapter);
+        swipeStack.setListener(new SwipeStack.SwipeStackListener() {
+            @Override
+            public void onViewSwipedToLeft(int position) {
+
+            }
+
+            @Override
+            public void onViewSwipedToRight(int position) {
+                mistakeList.add(linkedList.get(position));
+            }
+
+            @Override
+            public void onStackEmpty() {
+                LinkedList<Word> tmp = linkedList;
+                linkedList = mistakeList;
+                mistakeList = tmp;
+                while (!mistakeList.isEmpty()) {
+                    mistakeList.removeFirst();
+                }
+                addMistake(linkedList);
+            }
+        });
     }
 
     @Override

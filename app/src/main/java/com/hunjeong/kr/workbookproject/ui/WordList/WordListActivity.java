@@ -208,6 +208,23 @@ public class WordListActivity extends AppCompatActivity implements AdapterView.O
                 numEdit.setText("0");
                 wordSpinner.setAdapter(new CustomSpinnerAdapter(getApplicationContext(), wordTyps));
                 sortSpinner.setAdapter(new CustomSpinnerAdapter(getApplicationContext(), sorts));
+                sortSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                        if (adapterView.getItemAtPosition(i).equals("랜덤")) {
+                            sortSequenceSpinner.setEnabled(false);
+                            sortSequenceSpinner.setClickable(false);
+                        } else {
+                            sortSequenceSpinner.setEnabled(true);
+                            sortSequenceSpinner.setClickable(true);
+                        }
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView) {
+
+                    }
+                });
                 typeSpinner.setAdapter(new CustomSpinnerAdapter(getApplicationContext(), exams));
                 sortSequenceSpinner.setAdapter(new CustomSpinnerAdapter(getApplicationContext(), sort_sequence));
 
