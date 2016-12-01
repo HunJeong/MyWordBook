@@ -75,7 +75,6 @@ public class WordListActivity extends AppCompatActivity implements AdapterView.O
 
     private void initValue() {
         realm = Realm.getDefaultInstance();
-        //wordListAdapter = new WordListAdapter(getApplicationContext(), realm.where(Word.class).equalTo("dictionaryId", dictionaryId).findAll());
         initListView();
     }
 
@@ -233,7 +232,7 @@ public class WordListActivity extends AppCompatActivity implements AdapterView.O
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Intent exam = new Intent();
                         exam.putExtra("dictionaryId", dictionaryId);
-                        exam.putExtra("mead", meadRadio.isChecked());
+                        exam.putExtra("mean", meadRadio.isChecked());
                         if (((String)typeSpinner.getSelectedItem()).equals("넘기면서 외우기")) {
                             try {
                                 exam.setClass(getApplicationContext(), SwipeExamActivity.class);

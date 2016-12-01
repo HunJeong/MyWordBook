@@ -28,6 +28,11 @@ public class SwipeStackAdapter extends BaseAdapter {
         this.mean = mean;
     }
 
+
+    public void setList(LinkedList<Word> list) {
+        this.list = list;
+    }
+
     @Override
     public int getCount() {
         return list.size();
