@@ -134,7 +134,7 @@ public class WordListActivity extends AppCompatActivity implements AdapterView.O
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        //Toast.makeText(getApplicationContext(), ((Word)adapterView.getItemAtPosition(i)).getWord(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), ((Word)adapterView.getItemAtPosition(i)).getNumOfMistake() + "", Toast.LENGTH_SHORT).show();
     }
 
     @Override
