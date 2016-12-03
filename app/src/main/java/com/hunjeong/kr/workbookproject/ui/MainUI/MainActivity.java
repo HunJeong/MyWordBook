@@ -381,6 +381,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         protected void onPreExecute() {
             super.onPreExecute();
             Log.d(TAG, "FileLoadAsyncTask : onPreExecute");
+            Toast.makeText(context, "단어장을 가져오고 있습니다.", Toast.LENGTH_SHORT).show();
             try {
                 InputStream inputStream = getContentResolver().openInputStream(uri);
                 InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
