@@ -1,13 +1,11 @@
 package com.hunjeong.kr.workbookproject.ui.MainUI;
 
 import android.Manifest;
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -23,7 +21,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -40,14 +37,11 @@ import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.IllegalFormatException;
 import java.util.List;
 
 import io.realm.Realm;
@@ -146,6 +140,47 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .deleteAllFromRealm();
         realm.commitTransaction();
         Toast.makeText(getApplicationContext(), "단어장이 삭제되었습니다.", Toast.LENGTH_SHORT).show();
+    }
+
+    public void modifyItem(final Dictionary item) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("단어장 수정");
+        LinearLayout linearLayout = new LinearLayout(getApplicationContext());
+        View v = LayoutInflater.from(getApplicationContext()).inflate(R.layout.dialog_explain, linearLayout, true);
+        final EditText titleEdit = (EditText)v.findViewById(R.id.dialog_word);
+        final EditText explainEdit = (EditText)v.findViewById(R.id.dialog_mean);
+        titleEdit.setHint("Title");
+        explainEdit.setHint("Explain");
+        titleEdit.setText(item.getTitle());
+        explainEdit.setText(item.getExplain());
+        builder.setView(linearLayout);
+        builder.setPositiveButton("수정", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if (titleEdit.getText().length() != 0)
+                    editItem(item, titleEdit.getText().toString(), explainEdit.getText().toString());
+                else if (titleEdit.getText().length() == 0)
+                    Toast.makeText(getApplicationContext(), "단어를 입력해주세요.", Toast.LENGTH_SHORT).show();
+            }
+        });
+        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+        builder.show();
+    }
+
+    public void editItem(final Dictionary dictionary, final String modifiedTitle, final String modifiedExplain) {
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                Dictionary item = realm.where(Dictionary.class).equalTo("dictionaryId", dictionary.getDictionaryId()).findFirst();
+                item.setTitle(modifiedTitle);
+                item.setExplain(modifiedExplain);
+            }
+        });
     }
 
     /**

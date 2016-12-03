@@ -117,6 +117,8 @@ public class CardAdapter extends RealmRecyclerViewAdapter<Dictionary, CardAdapte
                     for (Dictionary dictionary: getData()) {
                         Log.d(TAG, dictionary.getTitle());
                     }
+                    activity.modifyItem(dictionary);
+                    notifyDataSetChanged();
                     break;
                 case R.id.action_delete:
                     Log.d(TAG, "delete " + dictionary.getTitle());
