@@ -1,15 +1,24 @@
 package com.hunjeong.kr.workbookproject.ui.MainUI;
 
+import android.Manifest;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
@@ -26,6 +35,21 @@ import com.hunjeong.kr.workbookproject.model.Word;
 import com.hunjeong.kr.workbookproject.ui.MaterialSheetFab.Fab;
 import com.hunjeong.kr.workbookproject.ui.splash.SplashActivity;
 
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.IllegalFormatException;
+import java.util.List;
+
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
@@ -33,6 +57,8 @@ import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     private static final String TAG = "MainActivity";
+    private static final int CSV_SELECT = 1;
+    private static final int EXCEL_SELECT = 2;
 
     private Realm realm;
     private RecyclerView recyclerView;
@@ -119,6 +145,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .findAll()
                 .deleteAllFromRealm();
         realm.commitTransaction();
+        Toast.makeText(getApplicationContext(), "단어장이 삭제되었습니다.", Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -209,7 +236,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         switch (id) {
             case R.id.main_fab_sheet_item_csv:
-                Toast.makeText(getApplicationContext(), "csv", Toast.LENGTH_SHORT).show();
+                int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
+                if (permissionCheck == PackageManager.PERMISSION_DENIED) {
+                    Toast.makeText(getApplicationContext(), "권한이 없습니다.", Toast.LENGTH_SHORT).show();
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+                } else {
+                    Intent csvSelectIntent = new Intent(Intent.ACTION_GET_CONTENT);
+                    csvSelectIntent.addCategory(Intent.CATEGORY_OPENABLE);
+                    csvSelectIntent.setType("text/*");
+                    try {
+                        startActivityForResult(Intent.createChooser(csvSelectIntent, "Choose CSV file that load words"), CSV_SELECT);
+                    } catch (android.content.ActivityNotFoundException e) {
+                        e.printStackTrace();
+                        Toast.makeText(getApplicationContext(), "Please install a File Manager", Toast.LENGTH_LONG).show();
+                    }
+                }
                 break;
             case R.id.main_fab_sheet_item_excel:
                 Toast.makeText(getApplicationContext(), "excel", Toast.LENGTH_SHORT).show();
@@ -245,4 +286,138 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         materialSheetFab.hideSheet();
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case CSV_SELECT:
+                try {
+                    Log.d(TAG, "Start AsyncTask");
+                    FileLoadAsyncTask fileLoadAsyncTask = new FileLoadAsyncTask(getApplicationContext(), data.getData(), requestCode);
+                    fileLoadAsyncTask.execute();
+                } catch (Exception e) {}
+                break;
+        }
+    }
+
+    class FileLoadAsyncTask extends AsyncTask<Integer, Integer, Integer> {
+
+        private Context context;
+        private Uri uri;
+        private int code;
+        private List<CSVRecord> records;
+        private ProgressDialog dialog;
+        private Realm realm;
+        private Dictionary dictionary;
+        private ArrayList<Word> words;
+
+        public FileLoadAsyncTask(Context context, Uri uri, int code) {
+            super();
+            this.context = context;
+            this.uri = uri;
+            this.code = code;
+            this.realm = Realm.getDefaultInstance();
+            words = new ArrayList<>();
+        }
+
+        @Override
+        protected Integer doInBackground(Integer... integers) {
+            Log.d(TAG, "Run AsyncTask");
+            dictionary = new Dictionary("새로운 단어장", "");
+            String dictionaryId = dictionary.getDictionaryId();
+            for (int i = 0; i < records.size(); i++) {
+                if (isCancelled())
+                    return null;
+                words.add(new Word(dictionaryId, records.get(i).get(0), records.get(i).get(1)));
+                Log.d(TAG, "doInBackground : add Word" + words.get(words.size()-1).toString());
+                publishProgress(i + 1);
+                try {
+                    Thread.sleep(2);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                Log.d(TAG, "input " + i + "'s index");
+            }
+            return words.size();
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            Log.d(TAG, "FileLoadAsyncTask : onPreExecute");
+            try {
+                InputStream inputStream = getContentResolver().openInputStream(uri);
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                CSVParser csvParser = new CSVParser(bufferedReader, CSVFormat.DEFAULT);
+                records = csvParser.getRecords();
+                dialog = new ProgressDialog(context);
+                dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                dialog.setMessage("파일을 추가하고 있습니다.");
+                dialog.setProgress(0);
+                dialog.setCancelable(false);
+            } catch (NullPointerException e) {
+                Log.d(TAG, "FileLoadAsyncTask : NullPointerException");
+                e.printStackTrace();
+                cancel(true);
+            } catch (FileNotFoundException e) {
+                Log.d(TAG, "FileLoadAsyncTask : FileNotFoundException");
+                e.printStackTrace();
+                cancel(true);
+            } catch (IOException e) {
+                Log.d(TAG, "FileLoadAsyncTask : IOException");
+                e.printStackTrace();
+                cancel(true);
+            } catch (IllegalArgumentException e) {
+                Log.d(TAG, "FileLoadAsyncTask : IllegalArgumentException");
+                e.printStackTrace();
+                cancel(true);
+            }
+            Log.d(TAG, "Dialog");
+
+            Log.d(TAG, "FileLoadAsyncTask : onPreExecute finish");
+        }
+
+        @Override
+        protected void onPostExecute(Integer integer) {
+            super.onPostExecute(integer);
+            if (dialog != null)
+                dialog.dismiss();
+            if (integer == records.size()) {
+                realm.executeTransaction(new Realm.Transaction() {
+                    @Override
+                    public void execute(Realm realm) {
+                        realm.copyToRealm(dictionary);
+                        for (int i = 0; i < words.size(); i++) {
+                            realm.copyToRealm(words.get(i));
+                        }
+                        Toast.makeText(context, "단어장 추가가 완료되었습니다.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            } else {
+                Toast.makeText(context, "단어장 추가를 실패하였습니다.", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+            try {
+                dialog.setProgress(values[0]);
+                Thread.sleep(5);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+            Log.d(TAG, "FileLoadAsyncTask : onCancelled");
+            if (dialog != null)
+                dialog.dismiss();
+        }
+    }
+
 }
