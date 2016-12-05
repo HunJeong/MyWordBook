@@ -364,7 +364,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             for (int i = 0; i < records.size(); i++) {
                 if (isCancelled())
                     return null;
-                words.add(new Word(dictionaryId, records.get(i).get(0), records.get(i).get(1)));
+                try {
+                    words.add(new Word(dictionaryId, records.get(i).get(0), records.get(i).get(1)));
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    e.printStackTrace();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(context, "단어장 추가를 실패하였습니다.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "행의 갯수가 2개 이상이 아닙니다.", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    cancel(true);
+                }
                 Log.d(TAG, "doInBackground : add Word" + words.get(words.size()-1).toString());
                 publishProgress(i + 1);
                 try {
