@@ -4,6 +4,7 @@ package com.hunjeong.kr.workbookproject.ui.SwipeExam;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -11,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
@@ -127,10 +129,22 @@ public class SwipeExamActivity extends AppCompatActivity {
 
     private void initView() {
         fab = (FloatingActionButton)findViewById(R.id.show_detail);
-        fab.setOnClickListener(new View.OnClickListener() {
+        fab.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "Show", Toast.LENGTH_SHORT).show();
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                switch (motionEvent.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        //Toast.makeText(getApplicationContext(), "Pressed", Toast.LENGTH_SHORT).show();
+                        View topView = swipeStack.getTopView();
+                        topView.findViewById(R.id.swipe_exam_down).setBackgroundColor(Color.WHITE);
+                        return true;
+                    case MotionEvent.ACTION_UP:
+                        View topView1 = swipeStack.getTopView();
+                        topView1.findViewById(R.id.swipe_exam_down).setBackgroundColor(Color.BLACK);
+                        //Toast.makeText(getApplicationContext(), "Released", Toast.LENGTH_SHORT).show();
+                        return true;
+                }
+                return false;
             }
         });
         swipeStack = (SwipeStack)findViewById(R.id.swipeStack);

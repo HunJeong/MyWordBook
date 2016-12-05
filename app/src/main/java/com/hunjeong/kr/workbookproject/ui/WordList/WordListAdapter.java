@@ -103,7 +103,7 @@ public class WordListAdapter extends RealmBaseAdapter<Word> {
             viewHolder.important.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(context, i + "", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(context, i + "", Toast.LENGTH_SHORT).show();
                     realm.beginTransaction();
                     word.setImportant(!word.isImportant());
                     realm.commitTransaction();
