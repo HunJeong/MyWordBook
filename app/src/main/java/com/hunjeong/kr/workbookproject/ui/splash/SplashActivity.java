@@ -11,6 +11,9 @@ import android.os.Bundle;
 
 import com.hunjeong.kr.workbookproject.R;
 
+/**
+ * just splash activity
+ */
 public class SplashActivity extends AppCompatActivity {
 
     @Override

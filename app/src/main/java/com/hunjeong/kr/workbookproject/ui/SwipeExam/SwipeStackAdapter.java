@@ -62,7 +62,7 @@ public class SwipeStackAdapter extends BaseAdapter {
             ((TextView)v.findViewById(R.id.swipe_exam_up)).setText(list.get(i).getMean());
             ((TextView)v.findViewById(R.id.swipe_exam_down)).setText(list.get(i).getWord());
         }
-
+        ((TextView)v.findViewById(R.id.page_number)).setText(i+1 + " / " + list.size());
         return v;
     }
 }

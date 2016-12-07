@@ -127,7 +127,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     /**
-     * @param item : the item that user want to delete from dictionary list
+     * delete dictionary and word that dictionary have
+     * @param item : dictionary that will be modified
      */
     public void deleteItem(final Dictionary item) {
         final String id = item.getDictionaryId();
@@ -142,6 +143,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Toast.makeText(getApplicationContext(), "단어장이 삭제되었습니다.", Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * modify dictionary's information (name and explain about that) with a dialog
+     * @param item : modify dictionary's information with a dialog
+     */
     public void modifyItem(final Dictionary item) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("단어장 수정");
@@ -172,6 +177,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         builder.show();
     }
 
+    /**
+     * modify dictionary information as a new information that received by dialog
+     * @param dictionary
+     * @param modifiedTitle
+     * @param modifiedExplain
+     */
     public void editItem(final Dictionary dictionary, final String modifiedTitle, final String modifiedExplain) {
         realm.executeTransaction(new Realm.Transaction() {
             @Override
@@ -265,6 +276,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    /**
+     * floating action button's callback method
+     * this callback method is have 3 item's about adding dictionary
+     * main_fab_sheet_item_csv : add dictionary and words with CSV file
+     * main_fab_sheet_item_excel : add dictionary and words with Microsoft Office Excel file
+     * main_fab_sheet_item_do : add dictionary and words in app
+     * @param view : clicked view
+     */
     @Override
     public void onClick(View view) {
         int id = view.getId();

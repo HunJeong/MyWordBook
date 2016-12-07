@@ -25,6 +25,12 @@ import io.realm.Sort;
  * Created by JeongHun on 2016. 11. 11..
  */
 
+/**
+ * This class extend RealmRecyclerViewAdapter that is adjusted to recyclerview use realm
+ * It use android ViewHolder pattern so App save resource
+ * and show views as a CardView
+ */
+
 public class CardAdapter extends RealmRecyclerViewAdapter<Dictionary, CardAdapter.ViewHolder> {
 
     private static final String TAG = "CardAdapter";
@@ -100,6 +106,10 @@ public class CardAdapter extends RealmRecyclerViewAdapter<Dictionary, CardAdapte
             }
         }
 
+        /**
+         * each cardview have a menu that make to use modify, delete
+         * @param menu : cardview's menu
+         */
         private void initPopupMenu(View menu) {
             PopupMenu popupMenu = new PopupMenu(context, menu);
             popupMenu.getMenuInflater().inflate(R.menu.menu_card, popupMenu.getMenu());
@@ -107,6 +117,13 @@ public class CardAdapter extends RealmRecyclerViewAdapter<Dictionary, CardAdapte
             popupMenu.show();
         }
 
+        /**
+         * called by cardview's menu items
+         * action_modify : call modify method
+         * action_delete : call delete method
+         * @param item
+         * @return
+         */
         @Override
         public boolean onMenuItemClick(MenuItem item) {
             switch (item.getItemId()) {
