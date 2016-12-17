@@ -13,6 +13,9 @@ import com.hunjeong.kr.workbookproject.R;
  * Created by JeongHun on 2016. 11. 22..
  */
 
+/**
+ * Spinner adapter for dialog when user press exam start button
+ */
 public class CustomSpinnerAdapter extends BaseAdapter {
 
     Context context;

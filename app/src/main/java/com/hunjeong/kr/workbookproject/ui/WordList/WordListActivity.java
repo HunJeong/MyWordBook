@@ -57,6 +57,10 @@ public class WordListActivity extends AppCompatActivity implements AdapterView.O
         initValue();
     }
 
+    /**
+     * Initialize actionbar
+     * Add backbutton and set actionbar's title to dictionary's name
+     */
     private void initActionBar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -68,6 +72,9 @@ public class WordListActivity extends AppCompatActivity implements AdapterView.O
         actionBar.setTitle(dictionaryName);
     }
 
+    /**
+     * Initialize Floating Button
+     */
     private void initFloatingActionButton() {
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.start_exam);
         fab.setOnClickListener(this);
@@ -78,6 +85,9 @@ public class WordListActivity extends AppCompatActivity implements AdapterView.O
         initListView();
     }
 
+    /**
+     * Initialize listview
+     */
     private void initListView() {
         wordListAdapter = new WordListAdapter(getApplicationContext(), realm.where(Word.class).equalTo("dictionaryId", dictionaryId).findAll()); //Test
         wordListAdapter.setSortBasis(WordListAdapter.SortBasis.CREATE_AT);
@@ -90,6 +100,10 @@ public class WordListActivity extends AppCompatActivity implements AdapterView.O
         initListViewMenu();
     }
 
+    /**
+     * Add a menu to listview's row
+     * when swipe row from right to left, appear delete button
+     */
     private void initListViewMenu() {
         SwipeMenuCreator menuCreator = new SwipeMenuCreator() {
             @Override
@@ -127,16 +141,14 @@ public class WordListActivity extends AppCompatActivity implements AdapterView.O
         });
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        //Toast.makeText(getApplicationContext(), ((Word)adapterView.getItemAtPosition(i)).getNumOfMistake() + "", Toast.LENGTH_SHORT).show();
-    }
-
+    /**
+     * When user long click listview's row, appear dialog that can modify word
+     * @param adapterView : listview
+     * @param view : row
+     * @param position : row's position
+     * @param id
+     * @return is clicked
+     */
     @Override
     public boolean onItemLongClick(final AdapterView<?> adapterView, final View view, final int position, long id) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -170,6 +182,12 @@ public class WordListActivity extends AppCompatActivity implements AdapterView.O
         return true;
     }
 
+    /**
+     * Edit word
+     * @param editWord : Word instance that will modify
+     * @param modifiedWord : new word
+     * @param modifiedMean : new mean
+     */
     public void editItem(final Word editWord, final String modifiedWord, final String modifiedMean) {
         realm.executeTransaction(new Realm.Transaction() {
             @Override
@@ -181,6 +199,10 @@ public class WordListActivity extends AppCompatActivity implements AdapterView.O
         });
     }
 
+    /**
+     * When user press floating button, Set condition of exam that user do
+     * @param view
+     */
     @Override
     public void onClick(View view) {
         int id = view.getId();
@@ -290,4 +312,8 @@ public class WordListActivity extends AppCompatActivity implements AdapterView.O
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+    }
 }

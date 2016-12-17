@@ -341,6 +341,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         materialSheetFab.hideSheet();
     }
 
+    /**
+     * Execute make dictionary with selected file
+     * Classify operation with result code and request code
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -366,6 +373,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         private Dictionary dictionary;
         private ArrayList<Word> words;
 
+        /**
+         *
+         * @param context
+         * @param uri : File located in device location uri
+         * @param code
+         */
         public FileLoadAsyncTask(Context context, Uri uri, int code) {
             super();
             this.context = context;
@@ -375,6 +388,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             words = new ArrayList<>();
         }
 
+        /**
+         * Add dictionary and words as a Async
+         * @param integers
+         * @return
+         */
         @Override
         protected Integer doInBackground(Integer... integers) {
             Log.d(TAG, "Run AsyncTask");
@@ -408,6 +426,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return words.size();
         }
 
+        /**
+         * Get data in file before add data to database
+         */
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -446,6 +467,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Log.d(TAG, "FileLoadAsyncTask : onPreExecute finish");
         }
 
+        /**
+         * If thread get data from CVS file successfully, Insert to database
+         * @param integer
+         */
         @Override
         protected void onPostExecute(Integer integer) {
             super.onPostExecute(integer);
@@ -478,6 +503,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
 
+        /**
+         * Cancel
+         */
         @Override
         protected void onCancelled() {
             super.onCancelled();

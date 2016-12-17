@@ -16,6 +16,10 @@ import java.util.LinkedList;
  * Created by JeongHun on 2016. 11. 24..
  */
 
+/**
+ * Adapter for SwipeStackView
+ */
+
 public class SwipeStackAdapter extends BaseAdapter {
 
     private Context context;

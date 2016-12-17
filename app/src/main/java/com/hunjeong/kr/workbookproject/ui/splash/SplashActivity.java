@@ -28,6 +28,9 @@ public class SplashActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Check User's permission
+     */
     private void setPermission() {
         int checkPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
         if (checkPermission == PackageManager.PERMISSION_DENIED) {

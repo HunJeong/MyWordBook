@@ -48,14 +48,25 @@ public class WordListAdapter extends RealmBaseAdapter<Word> {
 
     }
 
+    /**
+     * Set sort
+     * @param sortBasis
+     */
     public void setSortBasis(SortBasis sortBasis) {
         this.sortBasis = sortBasis;
     }
 
+    /**
+     * Set sorting sequence
+     * @param sortSequence
+     */
     public void setSortSequence(Sort sortSequence) {
         this.sortSequence = sortSequence;
     }
 
+    /**
+     * Class for viewHoler pattern
+     */
     public class ViewHolder {
         TextView word;
         TextView mean;

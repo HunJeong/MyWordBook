@@ -62,6 +62,10 @@ public class SwipeExamActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Init and Get Database's information
+     * Make linkedList consist of selected words
+     */
     private void initRealm() {
         realm = Realm.getDefaultInstance();
         RealmQuery<Word> realmQuery = realm.where(Word.class)
@@ -80,6 +84,13 @@ public class SwipeExamActivity extends AppCompatActivity {
         shuffleLinkedList(linkedList, sortType.equals("랜덤"));
     }
 
+    /**
+     * Init linkedList with information that received by previous Activity's intent
+     * @param realmResult : Selected data set
+     * @param sort : Condition of sort
+     * @param sequence : Condition of sequence
+     * @return : LinkedList consist of selected words
+     */
     private LinkedList<Word> initLinkedList(RealmResults<Word> realmResult, String sort, String sequence) {
         if (sort.equals("생성 순서")) {
             if (sequence.equals("오름차순")) {
@@ -97,12 +108,21 @@ public class SwipeExamActivity extends AppCompatActivity {
         return new LinkedList<>(realmResult);
     }
 
+    /**
+     * Shuffle linkedList
+     * @param linkedList
+     * @param isSort
+     */
     private void shuffleLinkedList(LinkedList<Word> linkedList, boolean isSort) {
         if (isSort) {
              Collections.shuffle(linkedList);
         }
     }
 
+    /**
+     * User is incorrect words then add mistake count to every word that user is incorrect
+     * @param linkedList
+     */
     private void addMistake(LinkedList<Word> linkedList) {
         realm.beginTransaction();
         for (Word word : linkedList) {
@@ -111,11 +131,17 @@ public class SwipeExamActivity extends AppCompatActivity {
         realm.commitTransaction();
     }
 
+    /**
+     * Make backbutton in actionbar
+     */
     private void initActionBar() {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
+    /**
+     * Initialize Activity's member value
+     */
     private void initValue() {
         intent = getIntent();
         dictionaryId = intent.getStringExtra("dictionaryId");
@@ -127,6 +153,9 @@ public class SwipeExamActivity extends AppCompatActivity {
         context = this;
     }
 
+    /**
+     * Initialize Activity's View
+     */
     private void initView() {
         fab = (FloatingActionButton)findViewById(R.id.show_detail);
         fab.setOnTouchListener(new View.OnTouchListener() {
@@ -233,6 +262,9 @@ public class SwipeExamActivity extends AppCompatActivity {
         exit();
     }
 
+    /**
+     * Make finish dialog when user press backbutton
+     */
     private void exit() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("종료");

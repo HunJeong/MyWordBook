@@ -19,6 +19,9 @@ import com.hunjeong.kr.workbookproject.model.Word;
 import io.realm.Realm;
 import io.realm.Sort;
 
+/**
+ * Activity, User can add word directly
+ */
 public class WordAddActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener{
 
     private String dictionaryId;
@@ -40,11 +43,17 @@ public class WordAddActivity extends AppCompatActivity implements View.OnClickLi
         initListView();
     }
 
+    /**
+     * Get dictionary's unique id
+     */
     private void getDictionaryId() {
         Intent intent = getIntent();
         this.dictionaryId = intent.getStringExtra("dictionaryId");
     }
 
+    /**
+     * Make backbutton in actionbar
+     */
     private void initActionBar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -52,11 +61,17 @@ public class WordAddActivity extends AppCompatActivity implements View.OnClickLi
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
+    /**
+     * Initialize floating button that add word
+     */
     private void initFloatingActionButton() {
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.word_add_fab);
         fab.setOnClickListener(this);
     }
 
+    /**
+     * Initialize listview
+     */
     private void initListView() {
         listView = (ListView)findViewById(R.id.add_word_list);
         wordListAdapter = new WordListAdapter(getApplicationContext(), realm.where(Word.class).equalTo("dictionaryId", dictionaryId).findAll());
@@ -66,6 +81,9 @@ public class WordAddActivity extends AppCompatActivity implements View.OnClickLi
         listView.setOnItemClickListener(this);
     }
 
+    /**
+     * Initialize value
+     */
     private void initValue() {
         realm = Realm.getDefaultInstance();
         addMeanEdit = (EditText)findViewById(R.id.add_mean_edit);
@@ -87,6 +105,10 @@ public class WordAddActivity extends AppCompatActivity implements View.OnClickLi
 
     }
 
+    /**
+     * Floating button's press callback method
+     * @param view
+     */
     @Override
     public void onClick(View view) {
         switch (view.getId()) {

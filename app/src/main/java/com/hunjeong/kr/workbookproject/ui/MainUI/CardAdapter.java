@@ -75,6 +75,10 @@ public class CardAdapter extends RealmRecyclerViewAdapter<Dictionary, CardAdapte
         Log.d(TAG, dictionary.getTitle() + " : " + position + " : " + dictionary.getCreateAt());
     }
 
+    /**
+     * Class for viewHolder pattern
+     * Optimize to recyclerView that use Realm mobile database
+     */
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, PopupMenu.OnMenuItemClickListener{
         Dictionary dictionary;
         TextView title;
