@@ -222,9 +222,49 @@ public class SwipeExamActivity extends AppCompatActivity {
 
         switch (id) {
             case android.R.id.home:
-                finish();
+                exit();
                 break;
         }
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        exit();
+    }
+
+    private void exit() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("종료");
+        builder.setMessage("종료하시겠습니까?");
+        builder.setPositiveButton("네", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                AlertDialog.Builder saveState = new AlertDialog.Builder(context);
+                saveState.setTitle("종료");
+                saveState.setMessage("현재까지 진행한 결과를 저장하시겠습니까?");
+                saveState.setPositiveButton("네", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        addMistake(mistakeList);
+                        finish();
+                    }
+                });
+                saveState.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        finish();
+                    }
+                });
+                saveState.show();
+            }
+        });
+        builder.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+        builder.show();
     }
 }
